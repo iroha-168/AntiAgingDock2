@@ -1,20 +1,22 @@
 package com.antiaginglab.antiagingdockapp2
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import java.io.BufferedWriter
 import java.io.File
 import java.io.FileWriter
 import java.io.PrintWriter
-import java.nio.file.Path
-import java.nio.file.Paths
-import kotlin.math.log
 
 /*
 CSVファイルにデータを書き込み、内部ストレージに保存する
  */
 class InputDataActivity : AppCompatActivity() {
+
+    // TODO: viewModelの初期化
+    private val viewModel by viewModels<ConfirmViewModel>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_input_data)
@@ -22,12 +24,11 @@ class InputDataActivity : AppCompatActivity() {
         var name = "アンミカ"
         var height = "171.0"
         var weight = "58.0"
-
         val patientsDataList = listOf(name, height, weight)
 
         // ファイルが存在するか確認
         val filePath = "/data/data/com.antiaginglab.antiagingdockapp2/files/patients_data.csv"
-        val csvFile = File(filePath)
+        val csvFile = File(applicationContext.filesDir, filePath)
         if (csvFile.exists()) {
             Log.d("TAG1", "ファイルが存在します")
             addToFile(patientsDataList)
@@ -35,6 +36,9 @@ class InputDataActivity : AppCompatActivity() {
             Log.d("TAG2", "ファイルが存在しません")
             createFile(patientsDataList)
         }
+
+        // TODO: viewModelを呼び出す
+        viewModel.saveToFirebase(csvFile)
     }
 
 
