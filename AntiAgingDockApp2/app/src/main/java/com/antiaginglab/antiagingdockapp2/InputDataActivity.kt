@@ -28,7 +28,7 @@ class InputDataActivity : AppCompatActivity() {
 
         // ファイルが存在するか確認
         val filePath = "/data/data/com.antiaginglab.antiagingdockapp2/files/patients_data.csv"
-        val csvFile = File(applicationContext.filesDir, filePath)
+        val csvFile = File(filePath)
         if (csvFile.exists()) {
             Log.d("TAG1", "ファイルが存在します")
             addToFile(patientsDataList)

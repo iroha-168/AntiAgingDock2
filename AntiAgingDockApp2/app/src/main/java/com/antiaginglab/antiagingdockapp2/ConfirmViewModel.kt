@@ -17,7 +17,7 @@ class ConfirmViewModel : ViewModel() {
     fun saveToFirebase(csvFile: File) = viewModelScope.launch {
         try {
             // 非同期処理でrepositoryのメソッドを呼び出す
-            withContext(Dispatchers.Default) {  }
+            withContext(Dispatchers.Default) { repository.save(csvFile) }
         } catch (e: Exception) {
             Log.d("ERROR", e.toString())
         }
