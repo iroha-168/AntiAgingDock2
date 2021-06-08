@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.gms.common.util.CollectionUtils.listOf
 import java.io.BufferedWriter
 import java.io.File
 import java.io.FileWriter
@@ -96,3 +97,7 @@ class InputDataActivity : AppCompatActivity() {
         pw.close()
     }
 }
+
+
+
+
