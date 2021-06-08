@@ -11,4 +11,6 @@
     <color name="dark_green">#393e46</color>
     <color name="light_green">#76ead7</color>
     <color name="yellowed_green">#c4fb6d</color>
+    <color name="background_color">#f5f5f5</color>
+    <color name="action_bar">#161616</color>
 </resources>

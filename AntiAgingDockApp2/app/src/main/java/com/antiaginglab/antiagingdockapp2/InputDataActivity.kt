@@ -2,6 +2,8 @@ package com.antiaginglab.antiagingdockapp2
 
 import android.os.Bundle
 import android.util.Log
+import android.view.ViewGroup
+import android.widget.LinearLayout
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.antiaginglab.antiagingdockapp2.databinding.ActivityInputDataBinding
@@ -14,7 +16,7 @@ import java.io.PrintWriter
 /*
 CSVファイルにデータを書き込み、内部ストレージに保存する
  */
-class InputDataActivity : AppCompatActivity() {
+class InputDataActivity : AppCompatActivity(), ToolBarCustomViewDelegate {
 
     // viewModelの初期化
     private val viewModel by viewModels<ConfirmViewModel>()
@@ -29,11 +31,14 @@ class InputDataActivity : AppCompatActivity() {
             .apply { setContentView(this.root) }
 
         // TODO: デフォルトのアクションバーを非表示にする
+        supportActionBar?.hide()
+
         // TODO: カスタムツールバーを設置
         /*
          * setCustomToolBar()
          * 表示するツールバーの設定や配置を行うメソッド
          */
+        setCustomToolBar()
 
         // TODO: editTextに入力された値を受け取る
         var name = "アンミカ"
@@ -111,7 +116,34 @@ class InputDataActivity : AppCompatActivity() {
         pw.close()
     }
 
-    // TODO: setCustomToolBar()を実装
+    // ===== setCustomToolBar()を実装 =====
+    private fun setCustomToolBar() {
+        val toolBarCustomView = ToolBarCustomView(this)
+        toolBarCustomView.delegate = this
+
+        val title = getString(R.string.title_tool_bar)
+        toolBarCustomView.configure(title, false, false)
+
+        // カスタムツールバーを挿入するコンテナ(入れ物)を指定
+        val layout: LinearLayout = findViewById(R.id.container_for_toolbar)
+        // ツールバーの表示をコンテナに合わせる
+        toolBarCustomView.layoutParams = ViewGroup.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT
+        )
+        // カスタムツールバーを表示する
+        layout.addView(toolBarCustomView)
+    }
+
+    override fun onClickedLeftButton() {
+        // 前の画面に戻る
+        finish()
+    }
+
+    override fun onClickedRightButton() {
+        // TODO: メニューを表示
+        // TODO: メニュークリックでConfirmActivityに画面遷移
+    }
 }
 
 
