@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import com.antiaginglab.antiagingdockapp2.databinding.ActivityInputDataBinding
 import com.google.android.gms.common.util.CollectionUtils.listOf
 import java.io.BufferedWriter
 import java.io.File
@@ -15,13 +16,26 @@ CSVファイルにデータを書き込み、内部ストレージに保存す�
  */
 class InputDataActivity : AppCompatActivity() {
 
-    // TODO: viewModelの初期化
+    // viewModelの初期化
     private val viewModel by viewModels<ConfirmViewModel>()
+    // bindingクラスをlateinit varで宣言
+    private lateinit var binding: ActivityInputDataBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_input_data)
 
+        // bindingの初期化とsetContentViewを行う
+        binding = ActivityInputDataBinding.inflate(layoutInflater)
+            .apply { setContentView(this.root) }
+
+        // TODO: デフォルトのアクションバーを非表示にする
+        // TODO: カスタムツールバーを設置
+        /*
+         * setCustomToolBar()
+         * 表示するツールバーの設定や配置を行うメソッド
+         */
+
+        // TODO: editTextに入力された値を受け取る
         var name = "アンミカ"
         var height = "171.0"
         var weight = "58.0"
@@ -38,7 +52,7 @@ class InputDataActivity : AppCompatActivity() {
             createFile(patientsDataList)
         }
 
-        // TODO: viewModelを呼び出す
+        // viewModelを呼び出す
         viewModel.saveToFirebase(csvFile)
     }
 
@@ -96,6 +110,8 @@ class InputDataActivity : AppCompatActivity() {
         // ファイルを閉じる
         pw.close()
     }
+
+    // TODO: setCustomToolBar()を実装
 }
 
 

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/layout_custom_toolbar"
+    android:layout_width="match_parent"
+    android:layout_height="120dp"
+    android:background="#76ead7"
+    android:orientation="horizontal">
+
+    <ImageButton
+        android:id="@+id/btn_left"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_weight="0.5"
+        android:background="@color/dark_green"
+        android:scaleType="center"
+        android:scaleX="2"
+        android:scaleY="2"
+        app:srcCompat="@drawable/ic_baseline_arrow_back_24"
+        app:tint="@color/light_green" />
+
+    <TextView
+        android:id="@+id/text_title"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:background="@color/dark_green"
+        android:gravity="center"
+        android:text="アンチエイジング検診アプリ"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textColor="#76ead7"
+        android:textSize="36sp" />
+
+    <ImageButton
+        android:id="@+id/btn_right"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_weight="0.5"
+        android:background="@color/dark_green"
+        android:scaleX="2"
+        android:scaleY="2"
+        app:srcCompat="@drawable/ic_baseline_menu_24"
+        android:contentDescription="TODO"
+        app:tint="@color/light_green" />
+</LinearLayout>
