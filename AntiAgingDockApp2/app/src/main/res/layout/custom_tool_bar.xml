@@ -4,7 +4,7 @@
     android:id="@+id/layout_custom_toolbar"
     android:layout_width="match_parent"
     android:layout_height="120dp"
-    android:background="#76ead7"
+    android:background="@color/dark_green"
     android:orientation="horizontal">
 
     <ImageButton
@@ -37,9 +37,9 @@
         android:layout_height="match_parent"
         android:layout_weight="0.5"
         android:background="@color/dark_green"
+        android:contentDescription="TODO"
         android:scaleX="2"
         android:scaleY="2"
         app:srcCompat="@drawable/ic_baseline_menu_24"
-        android:contentDescription="TODO"
         app:tint="@color/light_green" />
 </LinearLayout>

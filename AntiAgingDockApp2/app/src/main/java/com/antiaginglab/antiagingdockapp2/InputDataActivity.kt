@@ -1,28 +1,32 @@
 package com.antiaginglab.antiagingdockapp2
 
+import android.os.Build
 import android.os.Bundle
-import android.util.Log
+import android.text.Editable
 import android.view.ViewGroup
 import android.widget.LinearLayout
+import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import com.antiaginglab.antiagingdockapp2.databinding.ActivityInputDataBinding
-import com.google.android.gms.common.util.CollectionUtils.listOf
 import java.io.BufferedWriter
 import java.io.File
 import java.io.FileWriter
 import java.io.PrintWriter
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 
 /*
 CSVファイルにデータを書き込み、内部ストレージに保存する
  */
 class InputDataActivity : AppCompatActivity(), ToolBarCustomViewDelegate {
 
-    // viewModelの初期化
     private val viewModel by viewModels<ConfirmViewModel>()
-    // bindingクラスをlateinit varで宣言
+    private var fileName = ""
     private lateinit var binding: ActivityInputDataBinding
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -30,42 +34,44 @@ class InputDataActivity : AppCompatActivity(), ToolBarCustomViewDelegate {
         binding = ActivityInputDataBinding.inflate(layoutInflater)
             .apply { setContentView(this.root) }
 
-        // TODO: デフォルトのアクションバーを非表示にする
+        // デフォルトのアクションバーを非表示にする
         supportActionBar?.hide()
 
-        // TODO: カスタムツールバーを設置
-        /*
-         * setCustomToolBar()
-         * 表示するツールバーの設定や配置を行うメソッド
-         */
+        // カスタムツールバーを設置
         setCustomToolBar()
 
-        // TODO: editTextに入力された値を受け取る
-        var name = "アンミカ"
-        var height = "171.0"
-        var weight = "58.0"
-        val patientsDataList = listOf(name, height, weight)
+        // ファイル名を生成
+        fileName = makeFileName()
 
-        // ファイルが存在するか確認
-        val filePath = "/data/data/com.antiaginglab.antiagingdockapp2/files/patients_data.csv"
-        val csvFile = File(filePath)
-        if (csvFile.exists()) {
-            Log.d("TAG1", "ファイルが存在します")
-            addToFile(patientsDataList)
-        } else {
-            Log.d("TAG2", "ファイルが存在しません")
-            createFile(patientsDataList)
+        // 送信ボタンをクリックした時の処理
+        binding.btnSend.setOnClickListener {
+
+            var name = binding.editTextName.text
+            var height = binding.editTextHeight.text
+            var weight = binding.editTextWeight.text
+            val patientsDataList = mutableListOf(name, height, weight)
+
+            val filePath = "/data/data/com.antiaginglab.antiagingdockapp2/files/${fileName}"
+            val csvFile = File(filePath)
+            if (csvFile.exists()) {
+                addToFile(patientsDataList)
+            } else {
+                createFile(patientsDataList)
+            }
+
+            // viewModelを呼び出す
+//            viewModel.saveToFirebase(csvFile)
+
+            // トースト表示
+            Toast.makeText(applicationContext, "送信しました", Toast.LENGTH_LONG).show()
         }
-
-        // viewModelを呼び出す
-        viewModel.saveToFirebase(csvFile)
     }
 
 
     // ===== ファイルが存在しない場合、ファイルを作成して書き込み =====
-    private fun createFile(patientsDataList: List<String>) {
+    private fun createFile(patientsDataList: MutableList<Editable>) {
         // 出力ファイルの作成
-        val file = File(applicationContext.filesDir, "patients_data.csv")
+        val file = File(applicationContext.filesDir, fileName)
         val fw = FileWriter(file, false)
         val pw = PrintWriter(BufferedWriter(fw))
 
@@ -88,15 +94,14 @@ class InputDataActivity : AppCompatActivity(), ToolBarCustomViewDelegate {
                 pw.print(",")
             }
         }
-
         // ファイルを閉じる
         pw.close()
     }
 
     // ===== ファイルが存在する場合、ファイルに追記 =====
-    private fun addToFile(patientsDataList: List<String>) {
+    private fun addToFile(patientsDataList: MutableList<Editable>) {
         // 出力ファイルの作成
-        val file = File(applicationContext.filesDir, "patients_data.csv")
+        val file = File(applicationContext.filesDir, fileName)
         val fw = FileWriter(file, true)
         val pw = PrintWriter(BufferedWriter(fw))
 
@@ -111,9 +116,17 @@ class InputDataActivity : AppCompatActivity(), ToolBarCustomViewDelegate {
                 pw.print(",")
             }
         }
-
         // ファイルを閉じる
         pw.close()
+    }
+
+    // ===== ファイル名を生成 =====
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun makeFileName(): String {
+        val date = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
+        val rand = (0..1000).random().toString()
+
+        return "patients_data_" + date + "_" + rand + ".csv"
     }
 
     // ===== setCustomToolBar()を実装 =====
@@ -122,10 +135,10 @@ class InputDataActivity : AppCompatActivity(), ToolBarCustomViewDelegate {
         toolBarCustomView.delegate = this
 
         val title = getString(R.string.title_tool_bar)
-        toolBarCustomView.configure(title, false, false)
+        toolBarCustomView.configure(title, true, false)
 
         // カスタムツールバーを挿入するコンテナ(入れ物)を指定
-        val layout: LinearLayout = findViewById(R.id.container_for_toolbar)
+        val layout: LinearLayout = binding.containerForToolbar
         // ツールバーの表示をコンテナに合わせる
         toolBarCustomView.layoutParams = ViewGroup.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
@@ -135,10 +148,7 @@ class InputDataActivity : AppCompatActivity(), ToolBarCustomViewDelegate {
         layout.addView(toolBarCustomView)
     }
 
-    override fun onClickedLeftButton() {
-        // 前の画面に戻る
-        finish()
-    }
+    override fun onClickedLeftButton(){ }
 
     override fun onClickedRightButton() {
         // TODO: メニューを表示
