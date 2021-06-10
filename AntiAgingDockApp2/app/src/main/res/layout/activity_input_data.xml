@@ -17,6 +17,7 @@
         app:layout_constraintTop_toTopOf="parent"></LinearLayout>
 
     <LinearLayout
+        android:id="@+id/container_for_edit_text"
         android:layout_width="400dp"
         android:layout_height="wrap_content"
         android:orientation="vertical"

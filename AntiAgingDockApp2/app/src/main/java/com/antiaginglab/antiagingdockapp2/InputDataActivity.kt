@@ -4,10 +4,7 @@ import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.text.Editable
-import android.view.Menu
-import android.view.MenuItem
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.Toast
@@ -64,13 +61,54 @@ class InputDataActivity : AppCompatActivity(), ToolBarCustomViewDelegate {
             }
 
             // editTextに入力された値をクリアする
-            val allText = EditText(this)
-            allText.editableText.clear()
+            clearForm(binding.containerForEditText)
 
             // トースト表示
-            Toast.makeText(applicationContext, "送信しました", Toast.LENGTH_LONG).show()
+            val tst = Toast.makeText(this, "送信しました", Toast.LENGTH_LONG)
+            tst.setGravity(Gravity.CENTER, 0, 0)
+            tst.show()
         }
     }
+
+
+    override fun onClickedLeftButton(){ }
+
+    override fun onClickedRightButton() {
+        // TODO: メニューを表示
+        // TODO: メニュークリックでConfirmActivityに画面遷移
+//        openOptionsMenu()
+    }
+
+    /*
+    // メニュー表示
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        val inflater = menuInflater
+        inflater.inflate(R.menu.main_menu, menu)
+        return true
+
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId) {
+            R.id.menu_item_complete -> {
+                // メニューがクリックされたらファイル名を保持したまま確認画面へ画面遷移
+                val intent = Intent(this, ConfirmActivity::class.java)
+                intent.putExtra("FILE_NAME", fileName)
+                startActivity(intent)
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+
+
+    override fun openOptionsMenu() {
+        val btn = findViewById<View>(R.id.menu_item_complete)
+        btn.showContextMenu()
+    }
+
+     */
 
 
     // ===== ファイルが存在しない場合、ファイルを作成して書き込み =====
@@ -153,37 +191,19 @@ class InputDataActivity : AppCompatActivity(), ToolBarCustomViewDelegate {
         layout.addView(toolBarCustomView)
     }
 
-    // メニュー表示
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        val inflater = menuInflater
-        inflater.inflate(R.menu.main_menu, menu)
-        return true
+    // ===== editTextに入力された値をクリアにする =====
+    private fun clearForm(group: ViewGroup) {
+        val count = group.childCount
+        for (i in 0 until count) {
+            val view = group.getChildAt(i)
+            if (view is EditText) {
+                view.setText("")
+            }
 
-        return super.onCreateOptionsMenu(menu)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when(item.itemId) {
-            R.id.menu_item_complete -> {
-                // メニューがクリックされたらファイル名を保持したまま確認画面へ画面遷移
-                val intent = Intent(this, ConfirmActivity::class.java)
-                intent.putExtra("FILE_NAME", fileName)
-                startActivity(intent)
+            if (view is ViewGroup && view.childCount > 0) {
+                clearForm(view)
             }
         }
-        return super.onOptionsItemSelected(item)
     }
 
-    override fun onClickedLeftButton(){ }
-
-    override fun onClickedRightButton() {
-        // TODO: メニューを表示
-        // TODO: メニュークリックでConfirmActivityに画面遷移
-        openOptionsMenu()
-    }
-
-    override fun openOptionsMenu() {
-        val btn = findViewById<View>(R.id.menu_item_complete)
-        btn.showContextMenu()
-    }
 }
