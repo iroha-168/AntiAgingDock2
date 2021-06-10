@@ -1,8 +1,12 @@
 package com.antiaginglab.antiagingdockapp2
 
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.text.Editable
+import android.view.Menu
+import android.view.MenuItem
+import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.Toast
@@ -22,7 +26,6 @@ CSVファイルにデータを書き込み、内部ストレージに保存す�
  */
 class InputDataActivity : AppCompatActivity(), ToolBarCustomViewDelegate {
 
-    private val viewModel by viewModels<ConfirmViewModel>()
     private var fileName = ""
     private lateinit var binding: ActivityInputDataBinding
 
@@ -58,9 +61,6 @@ class InputDataActivity : AppCompatActivity(), ToolBarCustomViewDelegate {
             } else {
                 createFile(patientsDataList)
             }
-
-            // viewModelを呼び出す
-//            viewModel.saveToFirebase(csvFile)
 
             // トースト表示
             Toast.makeText(applicationContext, "送信しました", Toast.LENGTH_LONG).show()
@@ -148,11 +148,37 @@ class InputDataActivity : AppCompatActivity(), ToolBarCustomViewDelegate {
         layout.addView(toolBarCustomView)
     }
 
+    // メニュー表示
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        return super.onCreateOptionsMenu(menu)
+
+        val inflater = menuInflater
+        inflater.inflate(R.menu.main_menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId) {
+            R.id.menu_item_complete -> {
+                val intent = Intent(this, ConfirmActivity::class.java)
+                intent.putExtra("FILE_NAME", fileName)
+                startActivity(intent)
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
     override fun onClickedLeftButton(){ }
 
     override fun onClickedRightButton() {
         // TODO: メニューを表示
         // TODO: メニュークリックでConfirmActivityに画面遷移
+        openOptionsMenu()
+    }
+
+    override fun openOptionsMenu() {
+        val btn = findViewById<View>(R.id.menu_item_complete)
+        btn.showContextMenu()
     }
 }
 
