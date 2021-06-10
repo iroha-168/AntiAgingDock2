@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.text.Editable
+import android.util.Log
 import android.view.*
 import android.widget.EditText
 import android.widget.LinearLayout
@@ -47,9 +48,11 @@ class InputDataActivity : AppCompatActivity(), ToolBarCustomViewDelegate {
         // 送信ボタンをクリックした時の処理
         binding.btnSend.setOnClickListener {
 
-            var name = binding.editTextName.text
-            var height = binding.editTextHeight.text
-            var weight = binding.editTextWeight.text
+//            val patientsDataList = getAllInputData(binding.containerForEditText)
+
+            var name = binding.editTextName.text.toString()
+            var height = binding.editTextHeight.text.toString()
+            var weight = binding.editTextWeight.text.toString()
             val patientsDataList = mutableListOf(name, height, weight)
 
             val filePath = "/data/data/com.antiaginglab.antiagingdockapp2/files/${fileName}"
@@ -112,7 +115,7 @@ class InputDataActivity : AppCompatActivity(), ToolBarCustomViewDelegate {
 
 
     // ===== ファイルが存在しない場合、ファイルを作成して書き込み =====
-    private fun createFile(patientsDataList: MutableList<Editable>) {
+    private fun createFile(patientsDataList: MutableList<String>) {
         // 出力ファイルの作成
         val file = File(applicationContext.filesDir, fileName)
         val fw = FileWriter(file, false)
@@ -142,7 +145,7 @@ class InputDataActivity : AppCompatActivity(), ToolBarCustomViewDelegate {
     }
 
     // ===== ファイルが存在する場合、ファイルに追記 =====
-    private fun addToFile(patientsDataList: MutableList<Editable>) {
+    private fun addToFile(patientsDataList: MutableList<String>) {
         // 出力ファイルの作成
         val file = File(applicationContext.filesDir, fileName)
         val fw = FileWriter(file, true)
@@ -205,5 +208,23 @@ class InputDataActivity : AppCompatActivity(), ToolBarCustomViewDelegate {
             }
         }
     }
+
+    // ===== editTextに入力された値を全て取得する =====
+//    private fun getAllInputData(group: ViewGroup): MutableList<String> {
+//        val count = group.childCount
+//        var editDataList = mutableListOf<String>()
+//        for (i in 0 until count) {
+//            val view = group.getChildAt(i)
+//            if (view is EditText) {
+//                Log.d("TAG", view.text.toString())
+//                editDataList[i] = view.text.toString()
+//            }
+//
+//            if (view is ViewGroup && view.childCount > 0) {
+//                clearForm(view)
+//            }
+//        }
+//        return editDataList
+//    }
 
 }
