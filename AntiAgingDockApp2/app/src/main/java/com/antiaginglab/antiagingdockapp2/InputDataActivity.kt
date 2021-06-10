@@ -8,6 +8,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.activity.viewModels
@@ -61,6 +62,10 @@ class InputDataActivity : AppCompatActivity(), ToolBarCustomViewDelegate {
             } else {
                 createFile(patientsDataList)
             }
+
+            // editTextに入力された値をクリアする
+            val allText = EditText(this)
+            allText.editableText.clear()
 
             // トースト表示
             Toast.makeText(applicationContext, "送信しました", Toast.LENGTH_LONG).show()
@@ -150,16 +155,17 @@ class InputDataActivity : AppCompatActivity(), ToolBarCustomViewDelegate {
 
     // メニュー表示
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        return super.onCreateOptionsMenu(menu)
-
         val inflater = menuInflater
         inflater.inflate(R.menu.main_menu, menu)
         return true
+
+        return super.onCreateOptionsMenu(menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId) {
             R.id.menu_item_complete -> {
+                // メニューがクリックされたらファイル名を保持したまま確認画面へ画面遷移
                 val intent = Intent(this, ConfirmActivity::class.java)
                 intent.putExtra("FILE_NAME", fileName)
                 startActivity(intent)
@@ -181,7 +187,3 @@ class InputDataActivity : AppCompatActivity(), ToolBarCustomViewDelegate {
         btn.showContextMenu()
     }
 }
-
-
-
-
