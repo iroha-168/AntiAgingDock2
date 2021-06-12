@@ -8,6 +8,7 @@ import android.util.Log
 import android.view.*
 import android.widget.EditText
 import android.widget.LinearLayout
+import android.widget.PopupMenu
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
@@ -77,17 +78,16 @@ class InputDataActivity : AppCompatActivity(), ToolBarCustomViewDelegate {
     override fun onClickedLeftButton(){ }
 
     override fun onClickedRightButton() {
-        // TODO: メニューを表示
-        // TODO: メニュークリックでConfirmActivityに画面遷移
-//        openOptionsMenu()
+        var menu = findViewById<View>(R.id.btn_right)
+        val popup = PopupMenu(this, menu)
+        menuInflater.inflate(R.menu.main_menu, popup.getMenu())
+        popup.show()
     }
 
-    /*
     // メニュー表示
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         val inflater = menuInflater
         inflater.inflate(R.menu.main_menu, menu)
-        return true
 
         return super.onCreateOptionsMenu(menu)
     }
@@ -104,14 +104,11 @@ class InputDataActivity : AppCompatActivity(), ToolBarCustomViewDelegate {
         return super.onOptionsItemSelected(item)
     }
 
-
-
     override fun openOptionsMenu() {
         val btn = findViewById<View>(R.id.menu_item_complete)
         btn.showContextMenu()
     }
 
-     */
 
 
     // ===== ファイルが存在しない場合、ファイルを作成して書き込み =====
