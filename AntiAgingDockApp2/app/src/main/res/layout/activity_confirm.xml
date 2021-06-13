@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/background_color"
     tools:context=".ConfirmActivity">
 
     <LinearLayout
@@ -48,6 +49,7 @@
                 android:layout_marginEnd="8dp"
                 android:layout_weight="1"
                 android:text="はい"
+                android:textColor="@color/light_green"
                 android:textSize="24sp"
                 android:textStyle="bold" />
 
@@ -58,6 +60,7 @@
                 android:layout_marginStart="8dp"
                 android:layout_weight="1"
                 android:text="いいえ"
+                android:textColor="@color/light_green"
                 android:textSize="24sp"
                 android:textStyle="bold" />
 

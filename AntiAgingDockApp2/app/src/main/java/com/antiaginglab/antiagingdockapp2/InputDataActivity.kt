@@ -49,12 +49,12 @@ class InputDataActivity : AppCompatActivity(), ToolBarCustomViewDelegate {
         // 送信ボタンをクリックした時の処理
         binding.btnSend.setOnClickListener {
 
-//            val patientsDataList = getAllInputData(binding.containerForEditText)
+            val patientsDataList = getAllInputData(binding.containerForEditText)
 
-            var name = binding.editTextName.text.toString()
-            var height = binding.editTextHeight.text.toString()
-            var weight = binding.editTextWeight.text.toString()
-            val patientsDataList = mutableListOf(name, height, weight)
+//            var name = binding.editTextName.text.toString()
+//            var height = binding.editTextHeight.text.toString()
+//            var weight = binding.editTextWeight.text.toString()
+//            val patientsDataList = mutableListOf(name, height, weight)
 
             val filePath = "/data/data/com.antiaginglab.antiagingdockapp2/files/${fileName}"
             val csvFile = File(filePath)
@@ -82,33 +82,19 @@ class InputDataActivity : AppCompatActivity(), ToolBarCustomViewDelegate {
         val popup = PopupMenu(this, menu)
         menuInflater.inflate(R.menu.main_menu, popup.getMenu())
         popup.show()
-    }
 
-    // メニュー表示
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        val inflater = menuInflater
-        inflater.inflate(R.menu.main_menu, menu)
-
-        return super.onCreateOptionsMenu(menu)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when(item.itemId) {
-            R.id.menu_item_complete -> {
-                // メニューがクリックされたらファイル名を保持したまま確認画面へ画面遷移
-                val intent = Intent(this, ConfirmActivity::class.java)
-                intent.putExtra("FILE_NAME", fileName)
-                startActivity(intent)
+        popup.setOnMenuItemClickListener {
+            when(it.itemId) {
+                R.id.menu_item_complete -> {
+                    // メニューがクリックされたらファイル名を保持したまま確認画面へ画面遷移
+                    val intent = Intent(this, ConfirmActivity::class.java)
+                    intent.putExtra("FILE_NAME", fileName)
+                    startActivity(intent)
+                }
             }
+            false
         }
-        return super.onOptionsItemSelected(item)
     }
-
-    override fun openOptionsMenu() {
-        val btn = findViewById<View>(R.id.menu_item_complete)
-        btn.showContextMenu()
-    }
-
 
 
     // ===== ファイルが存在しない場合、ファイルを作成して書き込み =====
@@ -207,21 +193,21 @@ class InputDataActivity : AppCompatActivity(), ToolBarCustomViewDelegate {
     }
 
     // ===== editTextに入力された値を全て取得する =====
-//    private fun getAllInputData(group: ViewGroup): MutableList<String> {
-//        val count = group.childCount
-//        var editDataList = mutableListOf<String>()
-//        for (i in 0 until count) {
-//            val view = group.getChildAt(i)
-//            if (view is EditText) {
-//                Log.d("TAG", view.text.toString())
-//                editDataList[i] = view.text.toString()
-//            }
-//
-//            if (view is ViewGroup && view.childCount > 0) {
-//                clearForm(view)
-//            }
-//        }
-//        return editDataList
-//    }
+    private fun getAllInputData(group: ViewGroup): MutableList<String> {
+        val count = group.childCount
+        var editDataList = mutableListOf<String>()
+        for (i in 0 until count) {
+            val view = group.getChildAt(i)
+            if (view is EditText) {
+                Log.d("TAG", view.text.toString())
+                editDataList.add(i, view.text.toString())
+            }
+
+            if (view is ViewGroup && view.childCount > 0) {
+                clearForm(view)
+            }
+        }
+        return editDataList
+    }
 
 }

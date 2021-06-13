@@ -21,7 +21,10 @@ class ConfirmActivity : AppCompatActivity(), ToolBarCustomViewDelegate {
         binding = ActivityConfirmBinding.inflate(layoutInflater)
                 .apply { setContentView(this.root) }
 
-        // TODO: ツールバーの表示
+        // デフォルトのアクションバーを非表示にする
+        supportActionBar?.hide()
+
+        // ツールバーの表示
         setCustomToolBar()
 
         // 「いいえ」ボタン押下で前の画面に戻る
