@@ -51,11 +51,6 @@ class InputDataActivity : AppCompatActivity(), ToolBarCustomViewDelegate {
 
             val patientsDataList = getAllInputData(binding.containerForEditText)
 
-//            var name = binding.editTextName.text.toString()
-//            var height = binding.editTextHeight.text.toString()
-//            var weight = binding.editTextWeight.text.toString()
-//            val patientsDataList = mutableListOf(name, height, weight)
-
             val filePath = "/data/data/com.antiaginglab.antiagingdockapp2/files/${fileName}"
             val csvFile = File(filePath)
             if (csvFile.exists()) {
