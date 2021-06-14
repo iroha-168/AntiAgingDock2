@@ -13,6 +13,7 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.children
 import com.antiaginglab.antiagingdockapp2.databinding.ActivityInputDataBinding
 import java.io.BufferedWriter
 import java.io.File
@@ -189,20 +190,14 @@ class InputDataActivity : AppCompatActivity(), ToolBarCustomViewDelegate {
 
     // ===== editTextに入力された値を全て取得する =====
     private fun getAllInputData(group: ViewGroup): MutableList<String> {
-        val count = group.childCount
         var editDataList = mutableListOf<String>()
-        for (i in 0 until count) {
-            val view = group.getChildAt(i)
+
+        group.children.forEachIndexed { i, view ->
             if (view is EditText) {
                 Log.d("TAG", view.text.toString())
                 editDataList.add(i, view.text.toString())
             }
-
-            if (view is ViewGroup && view.childCount > 0) {
-                clearForm(view)
-            }
         }
         return editDataList
     }
-
 }
