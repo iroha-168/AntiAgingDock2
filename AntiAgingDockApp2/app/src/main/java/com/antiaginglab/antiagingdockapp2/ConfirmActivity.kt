@@ -1,11 +1,13 @@
 package com.antiaginglab.antiagingdockapp2
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import androidx.activity.viewModels
 import com.antiaginglab.antiagingdockapp2.databinding.ActivityConfirmBinding
+import java.io.File
 
 /*
 内部ストレージに保存しているCSVファイルをFirebaseのstorageに登録する
@@ -36,9 +38,12 @@ class ConfirmActivity : AppCompatActivity(), ToolBarCustomViewDelegate {
         binding.btnYes.setOnClickListener {
             // TODO: ストレージに保存するのを許可するボタンをタップするとviewModelを呼び出す
             // TODO: InputDataActivityで作成したFileNameをこの画面で受け取り、ViewModelに渡す
-            // viewModel.saveToFirebase(csvFile)
+            val filename = intent.getStringExtra("FILE_NAME")
+            val csvFile = File(application.filesDir, filename)
+            viewModel.saveToFirebase(csvFile)
 
-            // TODO: CompleteAvtivityに画面遷移
+            // TODO: CompleteActivityに画面遷移
+//            val intent = Intent(this, )
         }
     }
 
