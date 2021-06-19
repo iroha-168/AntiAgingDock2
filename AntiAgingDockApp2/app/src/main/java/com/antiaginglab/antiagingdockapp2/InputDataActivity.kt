@@ -64,6 +64,7 @@ class InputDataActivity : AppCompatActivity(), ToolBarCustomViewDelegate {
             clearForm(binding.containerForEditText)
 
             // トースト表示
+            // TODO: お年寄りの方が確認出来やすいように、大きめの画像をトーストとして表示させるようにする
             val tst = Toast.makeText(this, "送信しました", Toast.LENGTH_LONG)
             tst.setGravity(Gravity.CENTER, 0, 0)
             tst.show()
