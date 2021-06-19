@@ -17,7 +17,8 @@
 
 Mac、Androidタブレット、AndroidStudio、FileMaker pro、Firebase Storage
 
-**使用言語：**Kotlin
+**使用言語：**
+Kotlin
 
 
 
