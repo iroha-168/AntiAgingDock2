@@ -52,22 +52,25 @@ class InputDataActivity : AppCompatActivity(), ToolBarCustomViewDelegate {
 
             val patientsDataList = getAllInputData(binding.containerForEditText)
 
-            val filePath = "/data/data/com.antiaginglab.antiagingdockapp2/files/${fileName}"
-            val csvFile = File(filePath)
-            if (csvFile.exists()) {
-                addToFile(patientsDataList)
-            } else {
-                createFile(patientsDataList)
+            val haveAllData = validationCheck(patientsDataList)
+            if (haveAllData) {
+                val filePath = "/data/data/com.antiaginglab.antiagingdockapp2/files/${fileName}"
+                val csvFile = File(filePath)
+                if (csvFile.exists()) {
+                    addToFile(patientsDataList)
+                } else {
+                    createFile(patientsDataList)
+                }
+
+                // editTextに入力された値をクリアする
+                clearForm(binding.containerForEditText)
+
+                // トースト表示
+                // TODO: お年寄りの方が確認出来やすいように、大きめの画像をトーストとして表示させるようにする
+                val tst = Toast.makeText(this, "送信しました", Toast.LENGTH_LONG)
+                tst.setGravity(Gravity.CENTER, 0, 0)
+                tst.show()
             }
-
-            // editTextに入力された値をクリアする
-            clearForm(binding.containerForEditText)
-
-            // トースト表示
-            // TODO: お年寄りの方が確認出来やすいように、大きめの画像をトーストとして表示させるようにする
-            val tst = Toast.makeText(this, "送信しました", Toast.LENGTH_LONG)
-            tst.setGravity(Gravity.CENTER, 0, 0)
-            tst.show()
         }
     }
 
@@ -200,5 +203,18 @@ class InputDataActivity : AppCompatActivity(), ToolBarCustomViewDelegate {
             }
         }
         return editDataList
+    }
+
+    private fun validationCheck(patientsDataList: MutableList<String>): Boolean {
+        val listSize = patientsDataList.size
+        for (i in 0 until listSize) {
+            Log.d("TAG", patientsDataList[i])
+            if (patientsDataList[i].isEmpty()) {
+                // FIXME: トーストが表示されない
+                Toast.makeText(this, "入力漏れがあります", Toast.LENGTH_LONG).show()
+                return false
+            }
+        }
+        return true
     }
 }
