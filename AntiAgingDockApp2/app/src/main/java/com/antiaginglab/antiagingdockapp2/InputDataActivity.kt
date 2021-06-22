@@ -1,5 +1,6 @@
 package com.antiaginglab.antiagingdockapp2
 
+import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
@@ -66,10 +67,7 @@ class InputDataActivity : AppCompatActivity(), ToolBarCustomViewDelegate {
                 clearForm(binding.containerForEditText)
 
                 // トースト表示
-                // TODO: お年寄りの方が確認出来やすいように、大きめの画像をトーストとして表示させるようにする
-                val tst = Toast.makeText(this, "送信しました", Toast.LENGTH_LONG)
-                tst.setGravity(Gravity.CENTER, 0, 0)
-                tst.show()
+                showToast(this)
             }
         }
     }
@@ -205,12 +203,13 @@ class InputDataActivity : AppCompatActivity(), ToolBarCustomViewDelegate {
         return editDataList
     }
 
+    // ===== 全てのeditTextが入力されているかチェック =====
     private fun validationCheck(patientsDataList: MutableList<String>): Boolean {
         val listSize = patientsDataList.size
         for (i in 0 until listSize) {
             Log.d("TAG", patientsDataList[i])
             if (patientsDataList[i].isEmpty()) {
-                // FIXME: トーストが表示されない
+
                 val tst = Toast.makeText(this, "入力漏れがあります", Toast.LENGTH_LONG)
                 tst.setGravity(Gravity.CENTER, 0, 0)
                 tst.show()
@@ -219,5 +218,15 @@ class InputDataActivity : AppCompatActivity(), ToolBarCustomViewDelegate {
             }
         }
         return true
+    }
+
+    // ===== 画像のトーストを表示する =====
+    private fun showToast(cont: Context) {
+        val view = layoutInflater.inflate(R.layout.toast_layout, null)
+
+        val tst = Toast.makeText(cont, "", Toast.LENGTH_SHORT)
+        tst.setGravity(Gravity.CENTER, 0, -100)
+        tst.setView(view)
+        tst.show()
     }
 }

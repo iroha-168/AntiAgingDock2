@@ -1,11 +1,14 @@
 package com.antiaginglab.antiagingdockapp2
 
+import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Gravity
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.LinearLayout
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.viewModels
 import com.antiaginglab.antiagingdockapp2.databinding.ActivityConfirmBinding
@@ -43,9 +46,8 @@ class ConfirmActivity : AppCompatActivity(), ToolBarCustomViewDelegate {
             val csvFile = File(application.filesDir, filename)
             viewModel.saveToFirebase(csvFile)
 
-            val tst = Toast.makeText(this, "保存しました", Toast.LENGTH_LONG)
-            tst.setGravity(Gravity.CENTER, 0, 0)
-            tst.show()
+            // トースト表示
+            showToast(this)
         }
     }
 
@@ -72,5 +74,21 @@ class ConfirmActivity : AppCompatActivity(), ToolBarCustomViewDelegate {
         )
         // カスタムツールバーを表示する
         layout.addView(toolBarCustomView)
+    }
+
+    // ===== 画像のトーストを表示する =====
+    private fun showToast(cont: Context) {
+        val view = layoutInflater.inflate(R.layout.toast_layout, null)
+
+        val tst = Toast.makeText(cont, "", Toast.LENGTH_SHORT)
+        tst.setGravity(Gravity.CENTER, 0, -100)
+        tst.setView(view)
+
+        // トーストの画像を変更
+        val img = view.findViewById<ImageView>(R.id.img_toast)
+        img.setImageResource(R.drawable.toast_neko_w_trans)
+
+        // 表示
+        tst.show()
     }
 }
