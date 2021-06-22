@@ -7,10 +7,7 @@ import android.os.Bundle
 import android.text.Editable
 import android.util.Log
 import android.view.*
-import android.widget.EditText
-import android.widget.LinearLayout
-import android.widget.PopupMenu
-import android.widget.Toast
+import android.widget.*
 import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
@@ -67,7 +64,7 @@ class InputDataActivity : AppCompatActivity(), ToolBarCustomViewDelegate {
                 clearForm(binding.containerForEditText)
 
                 // トースト表示
-                showToast(this)
+                showToast(this, R.drawable.toast_ok)
             }
         }
     }
@@ -206,14 +203,10 @@ class InputDataActivity : AppCompatActivity(), ToolBarCustomViewDelegate {
     // ===== 全てのeditTextが入力されているかチェック =====
     private fun validationCheck(patientsDataList: MutableList<String>): Boolean {
         val listSize = patientsDataList.size
+
         for (i in 0 until listSize) {
-            Log.d("TAG", patientsDataList[i])
             if (patientsDataList[i].isEmpty()) {
-
-                val tst = Toast.makeText(this, "入力漏れがあります", Toast.LENGTH_LONG)
-                tst.setGravity(Gravity.CENTER, 0, 0)
-                tst.show()
-
+                showToast(this, R.drawable.toast_ng_kuma_w_trans)
                 return false
             }
         }
@@ -221,12 +214,19 @@ class InputDataActivity : AppCompatActivity(), ToolBarCustomViewDelegate {
     }
 
     // ===== 画像のトーストを表示する =====
-    private fun showToast(cont: Context) {
+    private fun showToast(cont: Context, res: Int) {
+
         val view = layoutInflater.inflate(R.layout.toast_layout, null)
 
         val tst = Toast.makeText(cont, "", Toast.LENGTH_SHORT)
         tst.setGravity(Gravity.CENTER, 0, -100)
         tst.setView(view)
+
+        // トーストの画像を変更
+        val img = view.findViewById<ImageView>(R.id.img_toast)
+        img.setImageResource(res)
+
+        // 表示
         tst.show()
     }
 }
