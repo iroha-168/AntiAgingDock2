@@ -211,7 +211,10 @@ class InputDataActivity : AppCompatActivity(), ToolBarCustomViewDelegate {
             Log.d("TAG", patientsDataList[i])
             if (patientsDataList[i].isEmpty()) {
                 // FIXME: トーストが表示されない
-                Toast.makeText(this, "入力漏れがあります", Toast.LENGTH_LONG).show()
+                val tst = Toast.makeText(this, "入力漏れがあります", Toast.LENGTH_LONG)
+                tst.setGravity(Gravity.CENTER, 0, 0)
+                tst.show()
+
                 return false
             }
         }
