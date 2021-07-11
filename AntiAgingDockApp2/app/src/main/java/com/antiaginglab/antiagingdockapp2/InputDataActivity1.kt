@@ -21,7 +21,7 @@ class InputDataActivity1 : AppCompatActivity(), ToolBarCustomViewDelegate {
 
         // デフォルトのアクションバーを非表示にする
         supportActionBar?.hide()
-        
+
         // カスタムツールバーの設置
         setCustomToolBar()
 
