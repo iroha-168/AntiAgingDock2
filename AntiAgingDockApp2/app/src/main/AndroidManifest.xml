@@ -9,15 +9,17 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AntiAgingDockApp2">
-        <activity android:name=".InputDataActivity1"></activity>
+        <activity android:name=".InputDataActivity"></activity>
         <activity android:name=".ConfirmActivity" />
-        <activity android:name=".InputDataActivity">
+
+        <activity android:name=".InputDataActivity1">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
     </application>
 
 </manifest>

@@ -6,4 +6,14 @@
     android:layout_height="match_parent"
     tools:context=".InputDataActivity1">
 
+    <LinearLayout
+        android:id="@+id/container_for_tool_bar"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
