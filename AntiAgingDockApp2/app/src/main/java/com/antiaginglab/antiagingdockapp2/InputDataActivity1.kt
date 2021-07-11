@@ -36,7 +36,7 @@ class InputDataActivity1 : AppCompatActivity(), ToolBarCustomViewDelegate {
         toolBarCustomView.delegate = this
 
         val title = getString(R.string.title_tool_bar)
-        toolBarCustomView.configure(title, true, false)
+        toolBarCustomView.configure(title, true, true)
 
         // カスタムツールバーを挿入するコンテナ(入れ物)を指定
         val layout: LinearLayout = binding.containerForToolBar
