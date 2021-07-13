@@ -29,14 +29,31 @@ class InputDataActivity1 : AppCompatActivity(), ToolBarCustomViewDelegate {
 
     // ============= ツールバーの設定 =============
     override fun onClickedLeftButton(){ }
-    override fun onClickedRightButton(){ }
+    override fun onClickedRightButton() {
+//        var menu = findViewById<View>(R.id.btn_right)
+//        val popup = PopupMenu(this, menu)
+//        menuInflater.inflate(R.menu.main_menu, popup.getMenu())
+//        popup.show()
+//
+//        popup.setOnMenuItemClickListener {
+//            when(it.itemId) {
+//                R.id.menu_item_complete -> {
+//                    // メニューがクリックされたらファイル名を保持したまま確認画面へ画面遷移
+//                    val intent = Intent(this, ConfirmActivity::class.java)
+//                    intent.putExtra("FILE_NAME", fileName)
+//                    startActivity(intent)
+//                }
+//            }
+//            false
+//        }
+    }
 
     private fun setCustomToolBar() {
         val toolBarCustomView = ToolBarCustomView(this)
         toolBarCustomView.delegate = this
 
         val title = getString(R.string.title_tool_bar)
-        toolBarCustomView.configure(title, true, true)
+        toolBarCustomView.configure(title, true, false)
 
         // カスタムツールバーを挿入するコンテナ(入れ物)を指定
         val layout: LinearLayout = binding.containerForToolBar
