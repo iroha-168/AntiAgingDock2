@@ -80,7 +80,7 @@ class InputDataActivity1 : AppCompatActivity(), ToolBarCustomViewDelegate {
             val patientsBasicInfo = getAllInputData(binding.containerForBasicInfo)
             val haveAllData = validationCheck(patientsBasicInfo)
 
-            // TODO: アンケート情報を取得
+            // TODO: アンケート情報(チェックボックスに入力された値)を取得
             // TODO: アンケート情報のバリデーションチェック
 
             //FIXME: 患者の基本情報とアンケート情報の両方のバリデーション結果がtrueの場合ファイル作成
