@@ -169,14 +169,16 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintBottom_toTopOf="@+id/btn_send_1"
                 app:layout_constraintTop_toTopOf="@+id/cl_question">
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical">
+
                     <ListView
                         android:id="@+id/lv_question"
                         android:layout_width="match_parent"
-                        android:layout_height="700dp" />
+                        android:layout_height="650dp" />
                 </LinearLayout>
             </ScrollView>
 
@@ -185,11 +187,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
+                android:padding="10dp"
                 android:backgroundTint="@color/yellowed_green"
-                android:text="送信"
+                android:text="送信する"
                 android:textColor="@color/dark_green"
-                android:textSize="18dp"
+                android:textSize="25dp"
                 android:textStyle="bold"
+                android:layout_marginTop="16dp"
+                app:layout_constraintTop_toBottomOf="@+id/scroll"
                 app:layout_constraintBottom_toBottomOf="@+id/cl_question"
                 app:layout_constraintEnd_toEndOf="@+id/scroll" />
 
