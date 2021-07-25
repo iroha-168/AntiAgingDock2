@@ -19,13 +19,18 @@ import java.io.FileWriter
 import java.io.PrintWriter
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
+import kotlin.Pair
 
 class InputDataActivity1 : AppCompatActivity(), ToolBarCustomViewDelegate {
 
     private var fileName = ""
+    private var checkBoxList: MutableList<String> = mutableListOf()  // チェックボックスの結果を格納するためのリスト
+    private var allInfoList: MutableList<String> = mutableListOf() // 全てのアンケート結果を格納するためのリスト
+
     private lateinit var binding: ActivityInputData1Binding
     private lateinit var questionAdapter: QuestionAdapter
     private lateinit var questionList: ArrayList<String>
+
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -75,13 +80,35 @@ class InputDataActivity1 : AppCompatActivity(), ToolBarCustomViewDelegate {
 
         // 送信ボタンをクリックした時の処理
         binding.btnSend1.setOnClickListener {
-
-            // 患者の基本情報を取得
+            // FIXME: 患者の基本情報を取得
             val patientsBasicInfo = getAllInputData(binding.containerForBasicInfo)
-            val haveAllData = validationCheck(patientsBasicInfo)
+            // FIXME: 患者の基本情報のバリデーションが正確に判断されるように
+            val haveAllData = editTextValidation(patientsBasicInfo)
 
             // TODO: アンケート情報(チェックボックスに入力された値)を取得
-            // TODO: アンケート情報のバリデーションチェック
+            for (i in 0 until binding.lvQuestion.adapter.count) {
+                var question = binding.lvQuestion.adapter.getItem(i)
+                var view = binding.lvQuestion.adapter.getView(i, binding.lvQuestion.getChildAt(i), binding.lvQuestion)
+                var checkbox1 = view!!.findViewById<CheckBox>(R.id.checkbox_1)
+                var checkbox2 = view!!.findViewById<CheckBox>(R.id.checkbox_2)
+                var checkbox3 = view!!.findViewById<CheckBox>(R.id.checkbox_3)
+                var checkbox4 = view!!.findViewById<CheckBox>(R.id.checkbox_4)
+                var checkbox5 = view!!.findViewById<CheckBox>(R.id.checkbox_5)
+
+                val checkboxMap : Map<String, CheckBox> = mapOf("1" to checkbox1, "2" to checkbox2, "3" to checkbox3, "4" to checkbox4, "5" to checkbox5)
+
+                // trueの結果を番号として取得する
+                // TODO: アンケート情報(チェックボックス)のバリデーションチェック
+                val resultOfCheckBoxValidation: Pair<Boolean, String> = checkBoxValidation(checkboxMap, question)
+                val isSelectedOneAns = resultOfCheckBoxValidation.first
+                val selectedAns = resultOfCheckBoxValidation.second
+
+                // TODO: チェックボックスが１つだけ選択されている場合
+                if (isSelectedOneAns) {
+                    checkBoxList.add(selectedAns)
+                }
+            }
+
 
             //FIXME: 患者の基本情報とアンケート情報の両方のバリデーション結果がtrueの場合ファイル作成
             if (haveAllData) {
@@ -237,7 +264,7 @@ class InputDataActivity1 : AppCompatActivity(), ToolBarCustomViewDelegate {
     }
 
     // ===== 全てのeditTextが入力されているかチェック =====
-    private fun validationCheck(patientsDataList: MutableList<String>): Boolean {
+    private fun editTextValidation(patientsDataList: MutableList<String>): Boolean {
         val listSize = patientsDataList.size
 
         for (i in 0 until listSize) {
@@ -247,6 +274,34 @@ class InputDataActivity1 : AppCompatActivity(), ToolBarCustomViewDelegate {
             }
         }
         return true
+    }
+
+    // ===== チェックボックスが1つだけ選択されているかチェック =====
+    private fun checkBoxValidation(checkboxMap: Map<String, CheckBox>, question: Any): Pair<Boolean, String> {
+        var checkboxNum = ""
+        var numOfTrue = 0
+
+        checkboxMap.forEach { (num, checkbox) ->
+            checkboxNum = num
+
+            // FIXME: チェックボックスの正しいチェック状態を取得できない
+            Log.d("CHECKBOX", checkbox.toString())
+            Log.d("STATUS", checkbox.isChecked.toString())
+
+            if(checkbox.isChecked) {
+                numOfTrue ++
+                if (numOfTrue >= 2) {
+                    // TODO: １行につき2つ以上trueがある場合(２つ選択がある)
+                    Log.d("TAG", "「${question}」の項目で2つ回答を選択していませんか？")    // TODO: 最終的にはトーストを表示
+                    return Pair(false, "null")
+                } else if (numOfTrue == 0) {
+                    // TODO: １行につき１つもtrueがない場合(1つも選択されていない)
+                    Log.d("TAG", "「${question}」の項目で当てはまる項目を1つ選択していますか？")    // TODO: 最終的にはトーストを表示
+                    return Pair(false, "null")
+                }
+            }
+        }
+        return Pair(true, checkboxNum)
     }
 
     // ===== 画像のトーストを表示する =====
