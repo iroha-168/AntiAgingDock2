@@ -208,7 +208,6 @@ class InputDataActivity1 : AppCompatActivity(), ToolBarCustomViewDelegate {
         return "patients_data_" + date + "_" + rand + ".csv"
     }
 
-    // FIXME: チェックボックスの結果をクリアにするに変更
     // ===== editTextに入力された値をクリアにする =====
     private fun clearForm(group: ViewGroup) {
         val count = group.childCount

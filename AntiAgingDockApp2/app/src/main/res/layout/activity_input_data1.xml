@@ -28,17 +28,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <!--        <TextView-->
-        <!--            android:id="@+id/title"-->
-        <!--            android:layout_width="match_parent"-->
-        <!--            android:layout_height="wrap_content"-->
-        <!--            android:paddingTop="16dp"-->
-        <!--            android:paddingBottom="16dp"-->
-        <!--            android:text="高加齢問診票①"-->
-        <!--            android:textAlignment="center"-->
-        <!--            android:textColor="@color/black"-->
-        <!--            android:textSize="36sp"-->
-        <!--            android:textStyle="bold" />-->
 
         <LinearLayout
             android:id="@+id/container_for_basic_info"
@@ -180,12 +169,15 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintBottom_toTopOf="@+id/btn_send_1"
                 app:layout_constraintTop_toTopOf="@+id/cl_question">
-
-                <ListView
-                    android:id="@+id/lv_question"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="700dp" />
-
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+                    <ListView
+                        android:id="@+id/lv_question"
+                        android:layout_width="match_parent"
+                        android:layout_height="700dp" />
+                </LinearLayout>
             </ScrollView>
 
             <Button
