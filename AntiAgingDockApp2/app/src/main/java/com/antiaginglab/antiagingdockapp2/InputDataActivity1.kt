@@ -19,13 +19,12 @@ import java.io.FileWriter
 import java.io.PrintWriter
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
-import kotlin.Pair
 
 class InputDataActivity1 : AppCompatActivity(), ToolBarCustomViewDelegate {
 
-    private var haveError = false
     private var fileName = ""
-    private var radioBtnList: MutableList<String> = mutableListOf()  // ラジオボタンの結果を格納するためのリスト
+    private var basicInfoList: MutableList<String> = mutableListOf() // EditTextの結果を格納するためのリスト
+    private var radioBtnList: MutableList<String> = mutableListOf()  // RadioButtonの結果を格納するためのリスト
     private var allInfoList: MutableList<String> = mutableListOf() // 全てのアンケート結果を格納するためのリスト
 
     private lateinit var binding: ActivityInputData1Binding
@@ -82,13 +81,19 @@ class InputDataActivity1 : AppCompatActivity(), ToolBarCustomViewDelegate {
         // 送信ボタンをクリックした時の処理
         binding.btnSend1.setOnClickListener {
 
-            // FIXME: 患者の基本情報を取得
-            val patientsBasicInfo = getAllInputData(binding.containerForBasicInfo)
-            // FIXME: 患者の基本情報のバリデーションが正確に判断されるように
-            val haveAllData = editTextValidation(patientsBasicInfo)
+            // 患者の基本情報を取得
+            val idAndName = getAllInputData(binding.idAndNameContainer)
+            val haveIdAndName = editTextValidation(idAndName)
 
-            // TODO: アンケート情報(チェックボックスに入力された値)を取得
-            if (!haveError) {
+            val birthday = getAllInputData(binding.birthdayContainer)
+            val haveBirthday = editTextValidation(birthday)
+
+            val weightAndHeight = getAllInputData(binding.weightAndHeightContainer)
+            val haveWeightAndHeight = editTextValidation(weightAndHeight)
+
+
+            var haveErrorOnRadioBtn = false
+            if (!haveErrorOnRadioBtn) {
                 for (i in 0 until binding.lvQuestion.adapter.count) {
                     val question = binding.lvQuestion.adapter.getItem(i)
                     val view = binding.lvQuestion.adapter.getView(i, binding.lvQuestion.getChildAt(i), binding.lvQuestion)
@@ -97,31 +102,28 @@ class InputDataActivity1 : AppCompatActivity(), ToolBarCustomViewDelegate {
                     val radioButton = radioGroup.findViewById<RadioButton>(id)
                     val selectedNum = radioGroup.indexOfChild(radioButton) + 1
 
-                    // TODO: アンケート情報のバリデーションチェック
                     val isSelectedOneAns = radioBtnValidation(selectedNum, question)
 
-                    // TODO: チェックボックスが１つだけ選択されている場合、選択された結果をリストに保存
                     if (isSelectedOneAns) {
                         radioBtnList.add(selectedNum.toString())
                     } else if(!isSelectedOneAns) {
-                        haveError = true
+                        haveErrorOnRadioBtn = true
                         break
                     }
                 }
             }
 
-
             //FIXME: 患者の基本情報とアンケート情報の両方のバリデーション結果がtrueの場合ファイル作成
-            if (haveAllData) {
+            if (haveErrorOnRadioBtn && haveIdAndName && haveBirthday && haveWeightAndHeight) {
                 val filePath = "/data/data/com.antiaginglab.antiagingdockapp2/files/${fileName}"
                 val csvFile = File(filePath)
 
                 if (csvFile.exists()) {
                     // FIXME: 患者の基本情報とアンケート結果をcsvファイルに入力
-                    addToFile(patientsBasicInfo)
+                    addToFile(idAndName)
                 } else {
                     // FIXME: 患者の基本情報とアンケート結果をcsvファイルに入力
-                    createFile(patientsBasicInfo)
+                    createFile(idAndName)
                 }
 
                 // TODO: チェックボックスに入力された値をクリアにする
@@ -257,7 +259,6 @@ class InputDataActivity1 : AppCompatActivity(), ToolBarCustomViewDelegate {
 
         group.children.forEachIndexed { i, view ->
             if (view is EditText) {
-                Log.d("TAG", view.text.toString())
                 editDataList.add(i, view.text.toString())
             }
         }
@@ -280,7 +281,7 @@ class InputDataActivity1 : AppCompatActivity(), ToolBarCustomViewDelegate {
     // ===== チェックボックスが1つだけ選択されているかチェック =====
     private fun radioBtnValidation(selectedNum: Int, question: Any): Boolean {
         if (selectedNum == 0) {
-            Log.d("ERROR", "「${question}」の項目で回答を選択していますか？")
+            Log.d("ERROR", "「${question}」の項目で回答を選択していますか？") // TODO: トーストを表示させる
             return false
         }
         return true
