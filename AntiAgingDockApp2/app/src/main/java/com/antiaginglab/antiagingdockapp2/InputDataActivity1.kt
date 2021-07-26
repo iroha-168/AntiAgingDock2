@@ -23,8 +23,9 @@ import kotlin.Pair
 
 class InputDataActivity1 : AppCompatActivity(), ToolBarCustomViewDelegate {
 
+    private var haveError = false
     private var fileName = ""
-    private var checkBoxList: MutableList<String> = mutableListOf()  // チェックボックスの結果を格納するためのリスト
+    private var radioBtnList: MutableList<String> = mutableListOf()  // ラジオボタンの結果を格納するためのリスト
     private var allInfoList: MutableList<String> = mutableListOf() // 全てのアンケート結果を格納するためのリスト
 
     private lateinit var binding: ActivityInputData1Binding
@@ -80,32 +81,32 @@ class InputDataActivity1 : AppCompatActivity(), ToolBarCustomViewDelegate {
 
         // 送信ボタンをクリックした時の処理
         binding.btnSend1.setOnClickListener {
+
             // FIXME: 患者の基本情報を取得
             val patientsBasicInfo = getAllInputData(binding.containerForBasicInfo)
             // FIXME: 患者の基本情報のバリデーションが正確に判断されるように
             val haveAllData = editTextValidation(patientsBasicInfo)
 
             // TODO: アンケート情報(チェックボックスに入力された値)を取得
-            for (i in 0 until binding.lvQuestion.adapter.count) {
-                var question = binding.lvQuestion.adapter.getItem(i)
-                var view = binding.lvQuestion.adapter.getView(i, binding.lvQuestion.getChildAt(i), binding.lvQuestion)
-                var checkbox1 = view!!.findViewById<CheckBox>(R.id.checkbox_1)
-                var checkbox2 = view!!.findViewById<CheckBox>(R.id.checkbox_2)
-                var checkbox3 = view!!.findViewById<CheckBox>(R.id.checkbox_3)
-                var checkbox4 = view!!.findViewById<CheckBox>(R.id.checkbox_4)
-                var checkbox5 = view!!.findViewById<CheckBox>(R.id.checkbox_5)
+            if (!haveError) {
+                for (i in 0 until binding.lvQuestion.adapter.count) {
+                    val question = binding.lvQuestion.adapter.getItem(i)
+                    val view = binding.lvQuestion.adapter.getView(i, binding.lvQuestion.getChildAt(i), binding.lvQuestion)
+                    val radioGroup = view!!.findViewById<RadioGroup>(R.id.radio_group)
+                    val id = radioGroup.checkedRadioButtonId
+                    val radioButton = radioGroup.findViewById<RadioButton>(id)
+                    val selectedNum = radioGroup.indexOfChild(radioButton) + 1
 
-                val checkboxMap : Map<String, CheckBox> = mapOf("1" to checkbox1, "2" to checkbox2, "3" to checkbox3, "4" to checkbox4, "5" to checkbox5)
+                    // TODO: アンケート情報のバリデーションチェック
+                    val isSelectedOneAns = radioBtnValidation(selectedNum, question)
 
-                // trueの結果を番号として取得する
-                // TODO: アンケート情報(チェックボックス)のバリデーションチェック
-                val resultOfCheckBoxValidation: Pair<Boolean, String> = checkBoxValidation(checkboxMap, question)
-                val isSelectedOneAns = resultOfCheckBoxValidation.first
-                val selectedAns = resultOfCheckBoxValidation.second
-
-                // TODO: チェックボックスが１つだけ選択されている場合
-                if (isSelectedOneAns) {
-                    checkBoxList.add(selectedAns)
+                    // TODO: チェックボックスが１つだけ選択されている場合、選択された結果をリストに保存
+                    if (isSelectedOneAns) {
+                        radioBtnList.add(selectedNum.toString())
+                    } else if(!isSelectedOneAns) {
+                        haveError = true
+                        break
+                    }
                 }
             }
 
@@ -277,31 +278,12 @@ class InputDataActivity1 : AppCompatActivity(), ToolBarCustomViewDelegate {
     }
 
     // ===== チェックボックスが1つだけ選択されているかチェック =====
-    private fun checkBoxValidation(checkboxMap: Map<String, CheckBox>, question: Any): Pair<Boolean, String> {
-        var checkboxNum = ""
-        var numOfTrue = 0
-
-        checkboxMap.forEach { (num, checkbox) ->
-            checkboxNum = num
-
-            // FIXME: チェックボックスの正しいチェック状態を取得できない
-            Log.d("CHECKBOX", checkbox.toString())
-            Log.d("STATUS", checkbox.isChecked.toString())
-
-            if(checkbox.isChecked) {
-                numOfTrue ++
-                if (numOfTrue >= 2) {
-                    // TODO: １行につき2つ以上trueがある場合(２つ選択がある)
-                    Log.d("TAG", "「${question}」の項目で2つ回答を選択していませんか？")    // TODO: 最終的にはトーストを表示
-                    return Pair(false, "null")
-                } else if (numOfTrue == 0) {
-                    // TODO: １行につき１つもtrueがない場合(1つも選択されていない)
-                    Log.d("TAG", "「${question}」の項目で当てはまる項目を1つ選択していますか？")    // TODO: 最終的にはトーストを表示
-                    return Pair(false, "null")
-                }
-            }
+    private fun radioBtnValidation(selectedNum: Int, question: Any): Boolean {
+        if (selectedNum == 0) {
+            Log.d("ERROR", "「${question}」の項目で回答を選択していますか？")
+            return false
         }
-        return Pair(true, checkboxNum)
+        return true
     }
 
     // ===== 画像のトーストを表示する =====
