@@ -25,7 +25,7 @@ class InputDataActivity1 : AppCompatActivity(), ToolBarCustomViewDelegate {
     private var fileName = ""
     private var basicInfoList: MutableList<String> = mutableListOf() // EditTextの結果を格納するためのリスト
     private var radioBtnList: MutableList<String> = mutableListOf()  // RadioButtonの結果を格納するためのリスト
-    private var allInfoList: MutableList<String> = mutableListOf() // 全てのアンケート結果を格納するためのリスト
+    private var allInfoList: MutableList<MutableList<String>> = mutableListOf() // 全てのアンケート結果を格納するためのリスト
 
     private lateinit var binding: ActivityInputData1Binding
     private lateinit var questionAdapter: QuestionAdapter
@@ -91,7 +91,7 @@ class InputDataActivity1 : AppCompatActivity(), ToolBarCustomViewDelegate {
             val weightAndHeight = getAllInputData(binding.weightAndHeightContainer)
             val haveWeightAndHeight = editTextValidation(weightAndHeight)
 
-
+            // アンケート結果を取得
             var haveErrorOnRadioBtn = false
             if (!haveErrorOnRadioBtn) {
                 for (i in 0 until binding.lvQuestion.adapter.count) {
@@ -113,6 +113,10 @@ class InputDataActivity1 : AppCompatActivity(), ToolBarCustomViewDelegate {
                 }
             }
 
+            // 基本情報とアンケート結果をまとめる
+            allInfoList.add(basicInfoList)
+            allInfoList.add(radioBtnList)
+
             //FIXME: 患者の基本情報とアンケート情報の両方のバリデーション結果がtrueの場合ファイル作成
             if (haveErrorOnRadioBtn && haveIdAndName && haveBirthday && haveWeightAndHeight) {
                 val filePath = "/data/data/com.antiaginglab.antiagingdockapp2/files/${fileName}"
@@ -120,10 +124,10 @@ class InputDataActivity1 : AppCompatActivity(), ToolBarCustomViewDelegate {
 
                 if (csvFile.exists()) {
                     // FIXME: 患者の基本情報とアンケート結果をcsvファイルに入力
-                    addToFile(idAndName)
+                    addToFile(allInfoList)
                 } else {
                     // FIXME: 患者の基本情報とアンケート結果をcsvファイルに入力
-                    createFile(idAndName)
+                    createFile(allInfoList)
                 }
 
                 // TODO: チェックボックスに入力された値をクリアにする
