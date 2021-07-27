@@ -25,7 +25,7 @@ class InputDataActivity1 : AppCompatActivity(), ToolBarCustomViewDelegate {
     private var fileName = ""
     private var basicInfoList: MutableList<String> = mutableListOf() // EditTextの結果を格納するためのリスト
     private var radioBtnList: MutableList<String> = mutableListOf()  // RadioButtonの結果を格納するためのリスト
-    private var allInfoList: MutableList<MutableList<String>> = mutableListOf() // 全てのアンケート結果を格納するためのリスト
+    private var allInfoList: MutableList<String> = mutableListOf() // 全てのアンケート結果を格納するためのリスト
 
     private lateinit var binding: ActivityInputData1Binding
     private lateinit var questionAdapter: QuestionAdapter
@@ -51,24 +51,24 @@ class InputDataActivity1 : AppCompatActivity(), ToolBarCustomViewDelegate {
                 "目がかすむ",
                 "肩がこる",
                 "眼痛",
-                "筋肉痛・こり",
-                "動悸",
-                "息切れ",
-                "太りやすい",
-                "るいそう・やせ",
-                "だるい",
-                "健康感がない",
-                "口渇",
-                "肌の不調",
-                "食欲不振",
-                "胃が張る",
-                "胃痛",
-                "風邪をひきやすい",
-                "咳や痰",
-                "下痢",
-                "便秘",
-                "白髪",
-                "抜け毛"
+                "筋肉痛・こり"
+//                "動悸",
+//                "息切れ",
+//                "太りやすい",
+//                "るいそう・やせ",
+//                "だるい",
+//                "健康感がない",
+//                "口渇",
+//                "肌の不調",
+//                "食欲不振",
+//                "胃が張る",
+//                "胃痛",
+//                "風邪をひきやすい",
+//                "咳や痰",
+//                "下痢",
+//                "便秘",
+//                "白髪",
+//                "抜け毛"
         )
 
         // 作成したリストをアダプターにセット
@@ -84,16 +84,25 @@ class InputDataActivity1 : AppCompatActivity(), ToolBarCustomViewDelegate {
             // 患者の基本情報を取得
             val idAndName = getAllInputData(binding.idAndNameContainer)
             val haveIdAndName = editTextValidation(idAndName)
+            if (haveIdAndName){
+                basicInfoList.addAll(idAndName)
+            }
 
             val birthday = getAllInputData(binding.birthdayContainer)
             val haveBirthday = editTextValidation(birthday)
+            if (haveBirthday) {
+                basicInfoList.addAll(birthday)
+            }
 
             val weightAndHeight = getAllInputData(binding.weightAndHeightContainer)
             val haveWeightAndHeight = editTextValidation(weightAndHeight)
+            if (haveWeightAndHeight) {
+                basicInfoList.addAll(weightAndHeight)
+            }
 
             // アンケート結果を取得
-            var haveErrorOnRadioBtn = false
-            if (!haveErrorOnRadioBtn) {
+            var noErrorOnRadioBtn = true
+            if (noErrorOnRadioBtn) {
                 for (i in 0 until binding.lvQuestion.adapter.count) {
                     val question = binding.lvQuestion.adapter.getItem(i)
                     val view = binding.lvQuestion.adapter.getView(i, binding.lvQuestion.getChildAt(i), binding.lvQuestion)
@@ -107,18 +116,24 @@ class InputDataActivity1 : AppCompatActivity(), ToolBarCustomViewDelegate {
                     if (isSelectedOneAns) {
                         radioBtnList.add(selectedNum.toString())
                     } else if(!isSelectedOneAns) {
-                        haveErrorOnRadioBtn = true
+                        noErrorOnRadioBtn = false
                         break
                     }
                 }
             }
 
             // 基本情報とアンケート結果をまとめる
-            allInfoList.add(basicInfoList)
-            allInfoList.add(radioBtnList)
+            allInfoList.addAll(basicInfoList)
+            allInfoList.addAll(radioBtnList)
+            basicInfoList.forEach { el ->
+                Log.d("BASIC_INFO", el)
+            }
+            allInfoList.forEach { el ->
+                Log.d("ALL_INFO", el)
+            }
 
             //FIXME: 患者の基本情報とアンケート情報の両方のバリデーション結果がtrueの場合ファイル作成
-            if (haveErrorOnRadioBtn && haveIdAndName && haveBirthday && haveWeightAndHeight) {
+            if (noErrorOnRadioBtn && haveIdAndName && haveBirthday && haveWeightAndHeight) {
                 val filePath = "/data/data/com.antiaginglab.antiagingdockapp2/files/${fileName}"
                 val csvFile = File(filePath)
 
@@ -189,11 +204,25 @@ class InputDataActivity1 : AppCompatActivity(), ToolBarCustomViewDelegate {
         val pw = PrintWriter(BufferedWriter(fw))
 
         // ヘッダーの指定
+        pw.print("ID")
+        pw.print(",")
         pw.print("名前")
+        pw.print(",")
+        pw.print("誕生日")
+        pw.print(",")
+        pw.print("体重")
         pw.print(",")
         pw.print("身長")
         pw.print(",")
-        pw.print("体重")
+        pw.print("目が疲れる")
+        pw.print(",")
+        pw.print("目がかすむ")
+        pw.print(",")
+        pw.print("眼痛")
+        pw.print(",")
+        pw.print("肩がこる")
+        pw.print(",")
+        pw.print("筋肉痛・こり")
         pw.println()
 
         // データを書き込む
