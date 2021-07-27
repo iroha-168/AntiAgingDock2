@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">AntiAgingDockApp2</string>
-    <string name="title_tool_bar">高加齢問診票</string>
+    <string name="title_input_activity">高加齢問診票</string>
+    <string name="title_confirm_activity">確認画面</string>
 </resources>

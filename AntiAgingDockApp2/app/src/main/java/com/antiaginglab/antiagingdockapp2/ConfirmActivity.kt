@@ -1,14 +1,12 @@
 package com.antiaginglab.antiagingdockapp2
 
 import android.content.Context
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Gravity
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
-import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.viewModels
 import com.antiaginglab.antiagingdockapp2.databinding.ActivityConfirmBinding
@@ -62,7 +60,7 @@ class ConfirmActivity : AppCompatActivity(), ToolBarCustomViewDelegate {
         val toolBarCustomView = ToolBarCustomView(this)
         toolBarCustomView.delegate = this
 
-        val title = getString(R.string.title_tool_bar)
+        val title = getString(R.string.title_confirm_activity)
         toolBarCustomView.configure(title, false, true)
 
         // カスタムツールバーを挿入するコンテナ(入れ物)を指定

@@ -4,11 +4,9 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
-import android.text.Editable
 import android.util.Log
 import android.view.*
 import android.widget.*
-import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.children
@@ -158,7 +156,7 @@ class InputDataActivity : AppCompatActivity(), ToolBarCustomViewDelegate {
         val toolBarCustomView = ToolBarCustomView(this)
         toolBarCustomView.delegate = this
 
-        val title = getString(R.string.title_tool_bar)
+        val title = getString(R.string.title_input_activity)
         toolBarCustomView.configure(title, true, false)
 
         // カスタムツールバーを挿入するコンテナ(入れ物)を指定

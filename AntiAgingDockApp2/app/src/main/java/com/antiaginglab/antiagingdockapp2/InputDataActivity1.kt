@@ -125,24 +125,28 @@ class InputDataActivity1 : AppCompatActivity(), ToolBarCustomViewDelegate {
             // 基本情報とアンケート結果をまとめる
             allInfoList.addAll(basicInfoList)
             allInfoList.addAll(radioBtnList)
-            basicInfoList.forEach { el ->
-                Log.d("BASIC_INFO", el)
-            }
-            allInfoList.forEach { el ->
-                Log.d("ALL_INFO", el)
-            }
 
-            //FIXME: 患者の基本情報とアンケート情報の両方のバリデーション結果がtrueの場合ファイル作成
+            // 患者の基本情報とアンケート情報の両方のバリデーション結果がtrueの場合ファイル作成
+            var isSuccess = false
             if (noErrorOnRadioBtn && haveIdAndName && haveBirthday && haveWeightAndHeight) {
                 val filePath = "/data/data/com.antiaginglab.antiagingdockapp2/files/${fileName}"
                 val csvFile = File(filePath)
 
                 if (csvFile.exists()) {
-                    // FIXME: 患者の基本情報とアンケート結果をcsvファイルに入力
-                    addToFile(allInfoList)
+                    isSuccess = addToFile(allInfoList)
+                    if (isSuccess) {
+                        // ファイルにデータを記録したら、リスト内のデータをクリアにする
+                        basicInfoList.clear()
+                        radioBtnList.clear()
+                        allInfoList.clear()
+                    }
                 } else {
-                    // FIXME: 患者の基本情報とアンケート結果をcsvファイルに入力
-                    createFile(allInfoList)
+                    isSuccess = createFile(allInfoList)
+                    if (isSuccess) {
+                        basicInfoList.clear()
+                        radioBtnList.clear()
+                        allInfoList.clear()
+                    }
                 }
 
                 // TODO: チェックボックスに入力された値をクリアにする
@@ -182,7 +186,7 @@ class InputDataActivity1 : AppCompatActivity(), ToolBarCustomViewDelegate {
         val toolBarCustomView = ToolBarCustomView(this)
         toolBarCustomView.delegate = this
 
-        val title = getString(R.string.title_tool_bar)
+        val title = getString(R.string.title_input_activity)
         toolBarCustomView.configure(title, true, false)
 
         // カスタムツールバーを挿入するコンテナ(入れ物)を指定
@@ -197,7 +201,7 @@ class InputDataActivity1 : AppCompatActivity(), ToolBarCustomViewDelegate {
     }
 
     // ===== ファイルが存在しない場合、ファイルを作成して書き込み =====
-    private fun createFile(patientsDataList: MutableList<String>) {
+    private fun createFile(patientsDataList: MutableList<String>) : Boolean {
         // 出力ファイルの作成
         val file = File(applicationContext.filesDir, fileName)
         val fw = FileWriter(file, false)
@@ -238,10 +242,12 @@ class InputDataActivity1 : AppCompatActivity(), ToolBarCustomViewDelegate {
         }
         // ファイルを閉じる
         pw.close()
+
+        return true
     }
 
     // ===== ファイルが存在する場合、ファイルに追記 =====
-    private fun addToFile(patientsDataList: MutableList<String>) {
+    private fun addToFile(patientsDataList: MutableList<String>) : Boolean{
         // 出力ファイルの作成
         val file = File(applicationContext.filesDir, fileName)
         val fw = FileWriter(file, true)
@@ -260,6 +266,8 @@ class InputDataActivity1 : AppCompatActivity(), ToolBarCustomViewDelegate {
         }
         // ファイルを閉じる
         pw.close()
+
+        return true
     }
 
     // ===== ファイル名を生成 =====
