@@ -11,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AlertDialog
 import androidx.core.view.children
 import com.antiaginglab.antiagingdockapp2.databinding.ActivityInputData1Binding
 import java.io.BufferedWriter
@@ -101,26 +102,43 @@ class InputDataActivity1 : AppCompatActivity(), ToolBarCustomViewDelegate {
             }
 
             // アンケート結果を取得
-            var noErrorOnRadioBtn = true
-            if (noErrorOnRadioBtn) {
-                for (i in 0 until binding.lvQuestion.adapter.count) {
-                    val question = binding.lvQuestion.adapter.getItem(i)
-                    val view = binding.lvQuestion.adapter.getView(i, binding.lvQuestion.getChildAt(i), binding.lvQuestion)
-                    val radioGroup = view!!.findViewById<RadioGroup>(R.id.radio_group)
-                    val id = radioGroup.checkedRadioButtonId
-                    val radioButton = radioGroup.findViewById<RadioButton>(id)
-                    val selectedNum = radioGroup.indexOfChild(radioButton) + 1
+//            var noErrorOnRadioBtn = true
+//            if (noErrorOnRadioBtn) {
+//                for (i in 0 until binding.lvQuestion.adapter.count) {
+//                    val question = binding.lvQuestion.adapter.getItem(i)
+//                    val view = binding.lvQuestion.adapter.getView(i, binding.lvQuestion.getChildAt(i), binding.lvQuestion)
+//                    val radioGroup = view!!.findViewById<RadioGroup>(R.id.radio_group)
+//                    val id = radioGroup.checkedRadioButtonId
+//                    val radioButton = radioGroup.findViewById<RadioButton>(id)
+//                    val selectedNum = radioGroup.indexOfChild(radioButton) + 1
+//
+//                    val isSelectedOneAns = radioBtnValidation(selectedNum, question)
+//
+//                    if (isSelectedOneAns) {
+//                        radioBtnList.add(selectedNum.toString())
+//                    } else if(!isSelectedOneAns) {
+//                        noErrorOnRadioBtn = false
+//                        break
+//                    }
+//                }
+//            }
 
-                    val isSelectedOneAns = radioBtnValidation(selectedNum, question)
 
-                    if (isSelectedOneAns) {
-                        radioBtnList.add(selectedNum.toString())
-                    } else if(!isSelectedOneAns) {
-                        noErrorOnRadioBtn = false
-                        break
-                    }
+            for (i in 0 until binding.lvQuestion.adapter.count) {
+                val question = binding.lvQuestion.adapter.getItem(i)
+                val view = binding.lvQuestion.adapter.getView(i, binding.lvQuestion.getChildAt(i), binding.lvQuestion)
+                val radioGroup = view!!.findViewById<RadioGroup>(R.id.radio_group)
+                val id = radioGroup.checkedRadioButtonId
+                val radioButton = radioGroup.findViewById<RadioButton>(id)
+                val selectedNum = radioGroup.indexOfChild(radioButton) + 1
+
+                val isSelectedOneAns = radioBtnValidation(selectedNum, question)
+
+                if (isSelectedOneAns) {
+                    radioBtnList.add(selectedNum.toString())
                 }
             }
+
 
             // 基本情報とアンケート結果をまとめる
             allInfoList.addAll(basicInfoList)
@@ -128,7 +146,8 @@ class InputDataActivity1 : AppCompatActivity(), ToolBarCustomViewDelegate {
 
             // 患者の基本情報とアンケート情報の両方のバリデーション結果がtrueの場合ファイル作成
             var isSuccess = false
-            if (noErrorOnRadioBtn && haveIdAndName && haveBirthday && haveWeightAndHeight) {
+//            if (noErrorOnRadioBtn && haveIdAndName && haveBirthday && haveWeightAndHeight)
+            if (haveIdAndName && haveBirthday && haveWeightAndHeight) {
                 val filePath = "/data/data/com.antiaginglab.antiagingdockapp2/files/${fileName}"
                 val csvFile = File(filePath)
 
@@ -149,7 +168,7 @@ class InputDataActivity1 : AppCompatActivity(), ToolBarCustomViewDelegate {
                     }
                 }
 
-                // TODO: ラジオボタンの結果をクリアにする
+                // ラジオボタンの結果をクリアにする
                 clearRadioBtn()
 
                 // editTextに入力された値をクリアする
@@ -332,7 +351,12 @@ class InputDataActivity1 : AppCompatActivity(), ToolBarCustomViewDelegate {
     // ===== チェックボックスが1つだけ選択されているかチェック =====
     private fun radioBtnValidation(selectedNum: Int, question: Any): Boolean {
         if (selectedNum == 0) {
-            Log.d("ERROR", "「${question}」の項目で回答を選択していますか？") // TODO: トーストを表示させる
+            // アラートダイアログを表示
+            AlertDialog.Builder(this)
+                    .setTitle("回答を選択してください！")
+                    .setMessage("「${question}」の項目で回答を選択していません！")
+                    .setPositiveButton("OK"){dialog, which ->  }
+                    .show()
             return false
         }
         return true
