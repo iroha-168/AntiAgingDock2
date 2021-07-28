@@ -149,13 +149,8 @@ class InputDataActivity1 : AppCompatActivity(), ToolBarCustomViewDelegate {
                     }
                 }
 
-                // TODO: チェックボックスに入力された値をクリアにする
-                for (i in 0 until binding.lvQuestion.adapter.count) {
-                    val view = binding.lvQuestion.adapter.getView(i, binding.lvQuestion.getChildAt(i), binding.lvQuestion)
-                    val radioGroup = view!!.findViewById<RadioGroup>(R.id.radio_group)
-                    radioGroup.clearCheck()
-                }
-
+                // TODO: ラジオボタンの結果をクリアにする
+                clearRadioBtn()
 
                 // editTextに入力された値をクリアする
                 clearForm(binding.containerForBasicInfo)
@@ -297,6 +292,15 @@ class InputDataActivity1 : AppCompatActivity(), ToolBarCustomViewDelegate {
             if (view is ViewGroup && view.childCount > 0) {
                 clearForm(view)
             }
+        }
+    }
+
+    // =====radioButtonの結果をクリアにする
+    private fun clearRadioBtn(){
+        for (i in 0 until binding.lvQuestion.adapter.count) {
+            val view = binding.lvQuestion.adapter.getView(i, binding.lvQuestion.getChildAt(i), binding.lvQuestion)
+            val radioGroup = view!!.findViewById<RadioGroup>(R.id.radio_group)
+            radioGroup.clearCheck()
         }
     }
 
