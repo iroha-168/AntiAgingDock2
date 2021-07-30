@@ -82,7 +82,7 @@ class InputDataActivity1 : AppCompatActivity(), ToolBarCustomViewDelegate {
         // 送信ボタンをクリックした時の処理
         binding.btnSend1.setOnClickListener {
 
-            // 患者の基本情報を取得
+            // ============ 患者の基本情報を取得 ============
             val idAndName = getAllInputData(binding.idAndNameContainer)
             val haveIdAndName = editTextValidation(idAndName)
             if (haveIdAndName){
@@ -101,29 +101,8 @@ class InputDataActivity1 : AppCompatActivity(), ToolBarCustomViewDelegate {
                 basicInfoList.addAll(weightAndHeight)
             }
 
-            // アンケート結果を取得
-//            var noErrorOnRadioBtn = true
-//            if (noErrorOnRadioBtn) {
-//                for (i in 0 until binding.lvQuestion.adapter.count) {
-//                    val question = binding.lvQuestion.adapter.getItem(i)
-//                    val view = binding.lvQuestion.adapter.getView(i, binding.lvQuestion.getChildAt(i), binding.lvQuestion)
-//                    val radioGroup = view!!.findViewById<RadioGroup>(R.id.radio_group)
-//                    val id = radioGroup.checkedRadioButtonId
-//                    val radioButton = radioGroup.findViewById<RadioButton>(id)
-//                    val selectedNum = radioGroup.indexOfChild(radioButton) + 1
-//
-//                    val isSelectedOneAns = radioBtnValidation(selectedNum, question)
-//
-//                    if (isSelectedOneAns) {
-//                        radioBtnList.add(selectedNum.toString())
-//                    } else if(!isSelectedOneAns) {
-//                        noErrorOnRadioBtn = false
-//                        break
-//                    }
-//                }
-//            }
-
-
+            // ============ ラジオボタンを一行一行読み込む ============
+            var isSelectedOneAns = false
             for (i in 0 until binding.lvQuestion.adapter.count) {
                 val question = binding.lvQuestion.adapter.getItem(i)
                 val view = binding.lvQuestion.adapter.getView(i, binding.lvQuestion.getChildAt(i), binding.lvQuestion)
@@ -132,13 +111,12 @@ class InputDataActivity1 : AppCompatActivity(), ToolBarCustomViewDelegate {
                 val radioButton = radioGroup.findViewById<RadioButton>(id)
                 val selectedNum = radioGroup.indexOfChild(radioButton) + 1
 
-                val isSelectedOneAns = radioBtnValidation(selectedNum, question)
+                isSelectedOneAns = radioBtnValidation(selectedNum, question)
 
                 if (isSelectedOneAns) {
                     radioBtnList.add(selectedNum.toString())
                 }
             }
-
 
             // 基本情報とアンケート結果をまとめる
             allInfoList.addAll(basicInfoList)
@@ -146,33 +124,43 @@ class InputDataActivity1 : AppCompatActivity(), ToolBarCustomViewDelegate {
 
             // 患者の基本情報とアンケート情報の両方のバリデーション結果がtrueの場合ファイル作成
             var isSuccess = false
-//            if (noErrorOnRadioBtn && haveIdAndName && haveBirthday && haveWeightAndHeight)
-            if (haveIdAndName && haveBirthday && haveWeightAndHeight) {
+            if ( isSelectedOneAns && haveIdAndName && haveBirthday && haveWeightAndHeight) {
                 val filePath = "/data/data/com.antiaginglab.antiagingdockapp2/files/${fileName}"
                 val csvFile = File(filePath)
-
                 if (csvFile.exists()) {
+                    // すでにファイルが存在する場合
                     isSuccess = addToFile(allInfoList)
                     if (isSuccess) {
                         // ファイルにデータを記録したら、リスト内のデータをクリアにする
                         basicInfoList.clear()
                         radioBtnList.clear()
                         allInfoList.clear()
+
+                        // ラジオボタンの結果をクリアにする
+                        clearRadioBtn()
+                        // editTextに入力された値をクリアする
+                        clearForm(binding.containerForBasicInfo)
                     }
                 } else {
+                    // ファイルがない場合
                     isSuccess = createFile(allInfoList)
                     if (isSuccess) {
+                        // ファイルにデータを記録したら、リスト内のデータをクリアにする
                         basicInfoList.clear()
                         radioBtnList.clear()
                         allInfoList.clear()
+
+                        // ラジオボタンの結果をクリアにする
+                        clearRadioBtn()
+                        // editTextに入力された値をクリアする
+                        clearForm(binding.containerForBasicInfo)
                     }
                 }
 
-                // ラジオボタンの結果をクリアにする
-                clearRadioBtn()
-
-                // editTextに入力された値をクリアする
-                clearForm(binding.containerForBasicInfo)
+//                // ラジオボタンの結果をクリアにする
+//                clearRadioBtn()
+//                // editTextに入力された値をクリアする
+//                clearForm(binding.containerForBasicInfo)
 
                 // トースト表示
                 showToast(this, R.drawable.toast_ok)
