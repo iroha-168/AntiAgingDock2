@@ -5,7 +5,6 @@ import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
@@ -102,21 +101,28 @@ class InputDataActivity1 : AppCompatActivity(), ToolBarCustomViewDelegate {
             }
 
             // ============ ラジオボタンを一行一行読み込む ============
-            var isSelectedOneAns = false
-            for (i in 0 until binding.lvQuestion.adapter.count) {
-                val question = binding.lvQuestion.adapter.getItem(i)
-                val view = binding.lvQuestion.adapter.getView(i, binding.lvQuestion.getChildAt(i), binding.lvQuestion)
-                val radioGroup = view!!.findViewById<RadioGroup>(R.id.radio_group)
-                val id = radioGroup.checkedRadioButtonId
-                val radioButton = radioGroup.findViewById<RadioButton>(id)
-                val selectedNum = radioGroup.indexOfChild(radioButton) + 1
+            var noError = true
+            if(noError) {
+                for (i in 0 until binding.lvQuestion.adapter.count) {
+                    val question = binding.lvQuestion.adapter.getItem(i)
+                    val view = binding.lvQuestion.adapter.getView(i, binding.lvQuestion.getChildAt(i), binding.lvQuestion)
+                    val radioGroup = view!!.findViewById<RadioGroup>(R.id.radio_group)
+                    val id = radioGroup.checkedRadioButtonId
+                    val radioButton = radioGroup.findViewById<RadioButton>(id)
+                    val selectedNum = radioGroup.indexOfChild(radioButton) + 1
 
-                isSelectedOneAns = radioBtnValidation(selectedNum, question)
+                    var isSelectedOneAns = radioBtnValidation(selectedNum, question)
 
-                if (isSelectedOneAns) {
-                    radioBtnList.add(selectedNum.toString())
+                    // TODO:エラー処理を行う
+                    // このままだとfalseがあっても次の次のラジオボタンの結果の取得し、それがtrueの場合Vlidaitonをすり抜けてファイル作成してしまう
+                    if (isSelectedOneAns) {
+                        radioBtnList.add(selectedNum.toString())
+                    } else {
+                        noError = false
+                    }
                 }
             }
+
 
             // 基本情報とアンケート結果をまとめる
             allInfoList.addAll(basicInfoList)
@@ -124,7 +130,7 @@ class InputDataActivity1 : AppCompatActivity(), ToolBarCustomViewDelegate {
 
             // 患者の基本情報とアンケート情報の両方のバリデーション結果がtrueの場合ファイル作成
             var isSuccess = false
-            if ( isSelectedOneAns && haveIdAndName && haveBirthday && haveWeightAndHeight) {
+            if ( noError && haveIdAndName && haveBirthday && haveWeightAndHeight) {
                 val filePath = "/data/data/com.antiaginglab.antiagingdockapp2/files/${fileName}"
                 val csvFile = File(filePath)
                 if (csvFile.exists()) {
