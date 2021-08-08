@@ -84,7 +84,7 @@ class InputDataActivity1 : AppCompatActivity(), ToolBarCustomViewDelegate {
             // ============ 患者の基本情報を取得 ============
             val idAndName = getAllInputData(binding.idAndNameContainer)
             val haveIdAndName = editTextValidation(idAndName)
-            if (haveIdAndName){
+            if (haveIdAndName) {
                 basicInfoList.addAll(idAndName)
             }
 
@@ -98,30 +98,33 @@ class InputDataActivity1 : AppCompatActivity(), ToolBarCustomViewDelegate {
             val haveWeightAndHeight = editTextValidation(weightAndHeight)
             if (haveWeightAndHeight) {
                 basicInfoList.addAll(weightAndHeight)
-            }
+            } 
 
             // ============ ラジオボタンを一行一行読み込む ============
-            var noError = true
             val questionAdapter = binding.lvQuestion.adapter
-            if(noError) {
-                for (i in 0 until questionAdapter.count) {
-                    val question = questionAdapter.getItem(i)
-                    val view = questionAdapter.getView(i, binding.lvQuestion.getChildAt(i), binding.lvQuestion)
 
-                    val selectedNum = getSelectedRadioBtn(view)
-                    var isSelectedOneAns = radioBtnValidation(selectedNum)
+            // ラジオボタンを一行一行読み込んでいく
+            var isSelectedOneAns = false
+            for (i in 0 until questionAdapter.count) {
+                val question = questionAdapter.getItem(i)
+                val view = questionAdapter.getView(i, binding.lvQuestion.getChildAt(i), binding.lvQuestion)
 
-                    // エラーがある場合for文を一旦抜けてファイル作成まで行かないようにする
-                    if (isSelectedOneAns) {
-                        radioBtnList.add(selectedNum.toString())
-                    } else {
-                        noError = false
-                        // TODO:radioBtnListを一旦クリアにする
-                        radioBtnList.clear()
-                    }
+                // 選択されたラジオボタンの番号を取得
+                val selectedNum = getSelectedRadioBtn(view)
+                isSelectedOneAns = radioBtnValidation(selectedNum)
+
+                // ラジオボタンが一つも選択されていない場合はアラートを表示
+                if(!isSelectedOneAns) {
+                    showAlertDialog(question)
+                    basicInfoList.clear()
+                    radioBtnList.clear()
+
+                    return@setOnClickListener
                 }
-            }
 
+                // 選択されたボタンをリストに保存
+                radioBtnList.add(selectedNum)
+            }
 
             // 基本情報とアンケート結果をまとめる
             allInfoList.addAll(basicInfoList)
@@ -129,7 +132,7 @@ class InputDataActivity1 : AppCompatActivity(), ToolBarCustomViewDelegate {
 
             // 患者の基本情報とアンケート情報の両方のバリデーション結果がtrueの場合ファイル作成
             var isSuccess = false
-            if ( noError && haveIdAndName && haveBirthday && haveWeightAndHeight) {
+            if ( isSelectedOneAns && haveIdAndName && haveBirthday && haveWeightAndHeight) {
                 val filePath = "/data/data/com.antiaginglab.antiagingdockapp2/files/${fileName}"
                 val csvFile = File(filePath)
                 if (csvFile.exists()) {
@@ -162,16 +165,10 @@ class InputDataActivity1 : AppCompatActivity(), ToolBarCustomViewDelegate {
                     }
                 }
 
-//                // ラジオボタンの結果をクリアにする
-//                clearRadioBtn()
-//                // editTextに入力された値をクリアする
-//                clearForm(binding.containerForBasicInfo)
-
                 // トースト表示
                 showToast(this, R.drawable.toast_ok)
             }
         }
-
     }
 
     // ============= ツールバーの設定 =============
@@ -329,12 +326,12 @@ class InputDataActivity1 : AppCompatActivity(), ToolBarCustomViewDelegate {
     }
 
     // TODO: ===== 選択されたラジオボタンの番号を取得 =====
-    private fun getSelectedRadioBtn(view: View): Int {
+    private fun getSelectedRadioBtn(view: View): String {
         val radioGroup = view!!.findViewById<RadioGroup>(R.id.radio_group)
         val id = radioGroup.checkedRadioButtonId
         val radioButton = radioGroup.findViewById<RadioButton>(id)
         val selectedNum = radioGroup.indexOfChild(radioButton) + 1
-        return selectedNum
+        return selectedNum.toString()
     }
 
     // ===== 全てのeditTextが入力されているかチェック =====
@@ -351,7 +348,10 @@ class InputDataActivity1 : AppCompatActivity(), ToolBarCustomViewDelegate {
     }
 
     // ===== チェックボックスが1つだけ選択されているかチェック =====
-    private fun radioBtnValidation(selectedNum: Int): Boolean {
+    private fun radioBtnValidation(selectedNum: String): Boolean {
+        if (selectedNum == "0") {
+            return false
+        }
         return true
     }
 
