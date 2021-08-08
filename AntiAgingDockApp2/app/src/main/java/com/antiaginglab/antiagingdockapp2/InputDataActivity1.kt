@@ -84,21 +84,27 @@ class InputDataActivity1 : AppCompatActivity(), ToolBarCustomViewDelegate {
             // ============ 患者の基本情報を取得 ============
             val idAndName = getAllInputData(binding.idAndNameContainer)
             val haveIdAndName = editTextValidation(idAndName)
-            if (haveIdAndName) {
+            if (haveIdAndName){
                 basicInfoList.addAll(idAndName)
+            } else {
+                return@setOnClickListener
             }
 
             val birthday = getAllInputData(binding.birthdayContainer)
             val haveBirthday = editTextValidation(birthday)
             if (haveBirthday) {
                 basicInfoList.addAll(birthday)
+            } else {
+                return@setOnClickListener
             }
 
             val weightAndHeight = getAllInputData(binding.weightAndHeightContainer)
             val haveWeightAndHeight = editTextValidation(weightAndHeight)
             if (haveWeightAndHeight) {
                 basicInfoList.addAll(weightAndHeight)
-            } 
+            } else {
+                return@setOnClickListener
+            }
 
             // ============ ラジオボタンを一行一行読み込む ============
             val questionAdapter = binding.lvQuestion.adapter
