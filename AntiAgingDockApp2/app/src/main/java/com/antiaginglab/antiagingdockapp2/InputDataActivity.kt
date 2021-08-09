@@ -29,7 +29,9 @@ class InputDataActivity : AppCompatActivity(), ToolBarCustomViewDelegate {
 
     private lateinit var binding: ActivityInputDataBinding
     private lateinit var questionAdapter: QuestionAdapter
+    private lateinit var questionAdapter2: QuestionAdapter
     private lateinit var questionList: ArrayList<String>
+    private lateinit var questionList2: ArrayList<String>
 
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -70,14 +72,23 @@ class InputDataActivity : AppCompatActivity(), ToolBarCustomViewDelegate {
 //                "白髪",
 //                "抜け毛"
         )
+        questionList2 = arrayListOf(
+            "イライラする",
+            "怒りっぽい",
+            "意欲がわかない",
+            "幸せと感じない",
+            "生きがいがない"
+        )
 
         // 作成したリストをアダプターにセット
         questionAdapter = QuestionAdapter(this, questionList)
+        questionAdapter2 = QuestionAdapter(this, questionList2)
+
         binding.lvQuestion.adapter = questionAdapter
-        // TODO:lv_question2もadapterにセットする
-        binding.lvQuestion2.adapter = questionAdapter
+        binding.lvQuestion2.adapter = questionAdapter2
+
         // TODO:lv_question3もadapterにセットする
-        binding.lvQuestion3.adapter = questionAdapter
+//        binding.lvQuestion3.adapter = questionAdapter
 
         // ファイル名を生成
         fileName = makeFileName()

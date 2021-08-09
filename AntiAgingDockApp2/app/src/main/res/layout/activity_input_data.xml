@@ -224,7 +224,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="6"
                         android:paddingStart="32dp"
-                        android:text="からだの症状"
+                        android:text="こころの症状"
                         android:textColor="@color/black"
                         android:textSize="30dp"
                         android:textStyle="bold" />
@@ -290,75 +290,23 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical">
+
                     <ListView
                         android:id="@+id/lv_question_2"
                         android:layout_width="match_parent"
                         android:layout_height="300dp" />
                 </LinearLayout>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginTop="16dp">
-                    <TextView
+                <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="6"
+                        android:layout_weight="2"
                         android:paddingStart="32dp"
-                        android:text="からだの症状"
+                        android:text="生活習慣(なしの場合はゼロとお書き下さい)"
                         android:textColor="@color/black"
                         android:textSize="30dp"
-                        android:textStyle="bold" />
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:layout_weight="4"
-                        android:gravity="right">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textSize="30dp"
-                            android:textStyle="bold"
-                            android:textColor="@color/black"
-                            android:paddingEnd="30dp"
-                            android:text="1" />
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textSize="30dp"
-                            android:textStyle="bold"
-                            android:textColor="@color/black"
-                            android:paddingEnd="30dp"
-                            android:text="2" />
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textSize="30dp"
-                            android:textStyle="bold"
-                            android:textColor="@color/black"
-                            android:paddingEnd="30dp"
-                            android:text="3" />
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textSize="30dp"
-                            android:textStyle="bold"
-                            android:textColor="@color/black"
-                            android:paddingEnd="30dp"
-                            android:text="4" />
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textSize="30dp"
-                            android:textStyle="bold"
-                            android:textColor="@color/black"
-                            android:paddingEnd="30dp"
-                            android:text="5" />
-                    </LinearLayout>
-                </LinearLayout>
+                        android:textStyle="bold"
+                        android:layout_marginTop="16dp"/>
                 <View
                     android:layout_width="wrap_content"
                     android:layout_height="1dp"
@@ -371,11 +319,220 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="vertical">
-                    <ListView
-                        android:id="@+id/lv_question_3"
-                        android:layout_width="match_parent"
-                        android:layout_height="300dp" />
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:id="@+id/lifestyle_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_weight="5">
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:text="タバコ"
+                            android:textSize="30dp"
+                            android:paddingStart="32dp"
+                            android:layout_marginBottom="7dp"
+                            android:textColor="@color/black"/>
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:text="酒(/日)"
+                            android:textSize="30dp"
+                            android:paddingStart="32dp"
+                            android:layout_marginBottom="7dp"
+                            android:textColor="@color/black"/>
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:text="酒(/週)"
+                            android:textSize="30dp"
+                            android:paddingStart="32dp"
+                            android:layout_marginBottom="7dp"
+                            android:textColor="@color/black"/>
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:text="運動"
+                            android:textSize="30dp"
+                            android:paddingStart="32dp"
+                            android:layout_marginBottom="7dp"
+                            android:textColor="@color/black"/>
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:text="睡眠時間"
+                            android:textSize="30dp"
+                            android:paddingStart="32dp"
+                            android:layout_marginBottom="7dp"
+                            android:textColor="@color/black"/>
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:text="水分摂取"
+                            android:textSize="30dp"
+                            android:paddingStart="32dp"
+                            android:layout_marginBottom="7dp"
+                            android:textColor="@color/black"/>
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:text="TV画面などの注視時間"
+                            android:textSize="30dp"
+                            android:paddingStart="32dp"
+                            android:textColor="@color/black"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/lifestyle_per"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_weight="1">
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:text="１日"
+                            android:textSize="30dp"
+                            android:layout_marginBottom="7dp"
+                            android:textColor="@color/black"/>
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:text="１日"
+                            android:textSize="30dp"
+                            android:layout_marginBottom="7dp"
+                            android:textColor="@color/black"/>
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:text="飲酒は週"
+                            android:textSize="30dp"
+                            android:layout_marginBottom="7dp"
+                            android:textColor="@color/black"/>
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:text="週"
+                            android:textSize="30dp"
+                            android:layout_marginBottom="7dp"
+                            android:textColor="@color/black"/>
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:text="１日"
+                            android:textSize="30dp"
+                            android:layout_marginBottom="7dp"
+                            android:textColor="@color/black"/>
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:text="１日"
+                            android:textSize="30dp"
+                            android:layout_marginBottom="7dp"
+                            android:textColor="@color/black"/>
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:text="１日"
+                            android:textSize="30dp"
+                            android:textColor="@color/black"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/lifestyle_question_container"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_weight="3">
+                        <EditText
+                            android:id="@+id/smoking"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"/>
+                        <EditText
+                            android:id="@+id/alcohol_per_day"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"/>
+                        <EditText
+                            android:id="@+id/alcohol_per_week"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"/>
+                        <EditText
+                            android:id="@+id/exercise"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"/>
+                        <EditText
+                            android:id="@+id/sleep_time"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"/>
+                        <EditText
+                            android:id="@+id/hydration"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"/>
+                        <EditText
+                            android:id="@+id/tv_watiching"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/lifestyle_unit"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_weight="1">
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:text="本"
+                            android:textSize="30dp"
+                            android:layout_marginBottom="7dp"
+                            android:textColor="@color/black"/>
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:text="合"
+                            android:textSize="30dp"
+                            android:layout_marginBottom="7dp"
+                            android:textColor="@color/black"/>
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:text="日"
+                            android:textSize="30dp"
+                            android:layout_marginBottom="7dp"
+                            android:textColor="@color/black"/>
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:text="日"
+                            android:textSize="30dp"
+                            android:layout_marginBottom="7dp"
+                            android:textColor="@color/black"/>
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:text="時間"
+                            android:textSize="30dp"
+                            android:layout_marginBottom="7dp"
+                            android:textColor="@color/black"/>
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:text="リットル"
+                            android:textSize="30dp"
+                            android:layout_marginBottom="7dp"
+                            android:textColor="@color/black"/>
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:text="時間"
+                            android:textSize="30dp"
+                            android:textColor="@color/black"/>
+                    </LinearLayout>
+
+
                 </LinearLayout>
 
                 <Button
