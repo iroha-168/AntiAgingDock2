@@ -122,126 +122,123 @@
             android:textAlignment="center"
             android:textSize="25dp" />
 
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="6"
-                android:paddingStart="32dp"
-                android:text="からだの症状"
-                android:textColor="@color/black"
-                android:textSize="30dp"
-                android:textStyle="bold" />
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_weight="4"
-                android:gravity="right">
+                android:orientation="horizontal">
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="30dp"
-                    android:textStyle="bold"
+                    android:layout_weight="6"
+                    android:paddingStart="32dp"
+                    android:text="からだの症状"
                     android:textColor="@color/black"
-                    android:paddingEnd="30dp"
-                    android:text="1" />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
                     android:textSize="30dp"
-                    android:textStyle="bold"
-                    android:textColor="@color/black"
-                    android:paddingEnd="30dp"
-                    android:text="2" />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="30dp"
-                    android:textStyle="bold"
-                    android:textColor="@color/black"
-                    android:paddingEnd="30dp"
-                    android:text="3" />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="30dp"
-                    android:textStyle="bold"
-                    android:textColor="@color/black"
-                    android:paddingEnd="30dp"
-                    android:text="4" />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="30dp"
-                    android:textStyle="bold"
-                    android:textColor="@color/black"
-                    android:paddingEnd="30dp"
-                    android:text="5" />
-            </LinearLayout>
-
-
-
-        </LinearLayout>
-
-        <View
-            android:layout_width="wrap_content"
-            android:layout_height="1dp"
-            android:background="@color/black"
-            android:visibility="visible"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/cl_question"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-
-            <ScrollView
-                android:id="@+id/scroll"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintBottom_toTopOf="@+id/btn_send_1"
-                app:layout_constraintTop_toTopOf="@+id/cl_question">
+                    android:textStyle="bold" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_weight="4"
+                    android:gravity="right">
 
-                    <ListView
-                        android:id="@+id/lv_question"
-                        android:layout_width="match_parent"
-                        android:layout_height="650dp" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="30dp"
+                        android:textStyle="bold"
+                        android:textColor="@color/black"
+                        android:paddingEnd="30dp"
+                        android:text="1" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="30dp"
+                        android:textStyle="bold"
+                        android:textColor="@color/black"
+                        android:paddingEnd="30dp"
+                        android:text="2" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="30dp"
+                        android:textStyle="bold"
+                        android:textColor="@color/black"
+                        android:paddingEnd="30dp"
+                        android:text="3" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="30dp"
+                        android:textStyle="bold"
+                        android:textColor="@color/black"
+                        android:paddingEnd="30dp"
+                        android:text="4" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="30dp"
+                        android:textStyle="bold"
+                        android:textColor="@color/black"
+                        android:paddingEnd="30dp"
+                        android:text="5" />
                 </LinearLayout>
-            </ScrollView>
 
-            <Button
-                android:id="@+id/btn_send_1"
+
+
+            </LinearLayout>
+            <View
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="right"
-                android:layout_marginTop="16dp"
-                android:backgroundTint="@color/yellowed_green"
-                android:padding="10dp"
-                android:text="送信する"
-                android:textColor="@color/dark_green"
-                android:textSize="25dp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="@+id/cl_question"
-                app:layout_constraintEnd_toEndOf="@+id/scroll"
-                app:layout_constraintTop_toBottomOf="@+id/scroll" />
+                android:layout_height="1dp"
+                android:background="@color/black"
+                android:visibility="visible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/cl_question"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                <ScrollView
+                    android:id="@+id/scroll"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toTopOf="@+id/btn_send_1"
+                    app:layout_constraintTop_toTopOf="@+id/cl_question">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+
+                        <ListView
+                            android:id="@+id/lv_question"
+                            android:layout_width="match_parent"
+                            android:layout_height="650dp" />
+                    </LinearLayout>
+                </ScrollView>
+
+                <Button
+                    android:id="@+id/btn_send_1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:layout_marginTop="16dp"
+                    android:backgroundTint="@color/yellowed_green"
+                    android:padding="10dp"
+                    android:text="送信する"
+                    android:textColor="@color/dark_green"
+                    android:textSize="25dp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@+id/cl_question"
+                    app:layout_constraintEnd_toEndOf="@+id/scroll"
+                    app:layout_constraintTop_toBottomOf="@+id/scroll" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
