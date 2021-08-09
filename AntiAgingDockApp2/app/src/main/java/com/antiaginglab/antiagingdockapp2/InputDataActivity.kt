@@ -12,7 +12,7 @@ import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.core.view.children
-import com.antiaginglab.antiagingdockapp2.databinding.ActivityInputData1Binding
+import com.antiaginglab.antiagingdockapp2.databinding.ActivityInputDataBinding
 import java.io.BufferedWriter
 import java.io.File
 import java.io.FileWriter
@@ -20,14 +20,14 @@ import java.io.PrintWriter
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
-class InputDataActivity1 : AppCompatActivity(), ToolBarCustomViewDelegate {
+class InputDataActivity : AppCompatActivity(), ToolBarCustomViewDelegate {
 
     private var fileName = ""
     private var basicInfoList: MutableList<String> = mutableListOf() // EditTextの結果を格納するためのリスト
     private var radioBtnList: MutableList<String> = mutableListOf()  // RadioButtonの結果を格納するためのリスト
     private var allInfoList: MutableList<String> = mutableListOf() // 全てのアンケート結果を格納するためのリスト
 
-    private lateinit var binding: ActivityInputData1Binding
+    private lateinit var binding: ActivityInputDataBinding
     private lateinit var questionAdapter: QuestionAdapter
     private lateinit var questionList: ArrayList<String>
 
@@ -36,7 +36,7 @@ class InputDataActivity1 : AppCompatActivity(), ToolBarCustomViewDelegate {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding = ActivityInputData1Binding.inflate(layoutInflater)
+        binding = ActivityInputDataBinding.inflate(layoutInflater)
                 .apply { setContentView(this.root) }
 
         // デフォルトのアクションバーを非表示にする

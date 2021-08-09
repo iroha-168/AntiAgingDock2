@@ -12,7 +12,7 @@
 
         <activity android:name=".ConfirmActivity" />
 
-        <activity android:name=".InputDataActivity1">
+        <activity android:name=".InputDataActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
