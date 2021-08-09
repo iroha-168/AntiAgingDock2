@@ -74,6 +74,10 @@ class InputDataActivity : AppCompatActivity(), ToolBarCustomViewDelegate {
         // 作成したリストをアダプターにセット
         questionAdapter = QuestionAdapter(this, questionList)
         binding.lvQuestion.adapter = questionAdapter
+        // TODO:lv_question2もadapterにセットする
+        binding.lvQuestion2.adapter = questionAdapter
+        // TODO:lv_question3もadapterにセットする
+        binding.lvQuestion3.adapter = questionAdapter
 
         // ファイル名を生成
         fileName = makeFileName()
