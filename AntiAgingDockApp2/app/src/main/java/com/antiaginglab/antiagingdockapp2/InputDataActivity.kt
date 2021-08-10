@@ -121,14 +121,14 @@ class InputDataActivity : AppCompatActivity(), ToolBarCustomViewDelegate {
 
             // ============ ラジオボタンを一行一行読み込む ============
             // TODO:「からだの症状」の結果を取得
-            val questionAdapterBody = binding.lvQuestion.adapter
+            val questionAdapterBody = binding.lvQuestion
             var isSelectedOneAnsOnBody = readEachRadioBtn(questionAdapterBody)
             if (!isSelectedOneAnsOnBody) {
                 return@setOnClickListener
             }
 
             // TODO:「こころの症状」の結果を取得
-            val questionAdapterMental = binding.lvQuestion2.adapter
+            val questionAdapterMental = binding.lvQuestion2
             var isSelectedOneAnsOnMental = readEachRadioBtn(questionAdapterMental)
             if (!isSelectedOneAnsOnMental) {
                 return@setOnClickListener
@@ -351,11 +351,11 @@ class InputDataActivity : AppCompatActivity(), ToolBarCustomViewDelegate {
     }
 
     // ===== ラジオボタンの結果を1行1行読み取る =====
-    private fun readEachRadioBtn(questionAdapter: ListAdapter): Boolean {
+    private fun readEachRadioBtn(questionAdapter: ListView): Boolean {
         var isSelectedOneAns = false
-        for (i in 0 until questionAdapter.count) {
-            val question = questionAdapter.getItem(i)
-            val view = questionAdapter.getView(i, binding.lvQuestion.getChildAt(i), binding.lvQuestion)
+        for (i in 0 until questionAdapter.adapter.count) {
+            val question = questionAdapter.adapter.getItem(i)
+            val view = questionAdapter.adapter.getView(i, questionAdapter.getChildAt(i), questionAdapter)
 
             // 選択されたラジオボタンの番号を取得
             val selectedNum = getSelectedRadioBtn(view)
