@@ -104,6 +104,7 @@ class InputDataActivity : AppCompatActivity(), ToolBarCustomViewDelegate {
             if (haveIdAndName){
                 basicInfoList.addAll(idAndName)
             } else {
+                basicInfoList.clear()
                 return@setOnClickListener
             }
 
@@ -112,6 +113,7 @@ class InputDataActivity : AppCompatActivity(), ToolBarCustomViewDelegate {
             if (haveBirthday) {
                 basicInfoList.addAll(birthday)
             } else {
+                basicInfoList.clear()
                 return@setOnClickListener
             }
 
@@ -120,18 +122,19 @@ class InputDataActivity : AppCompatActivity(), ToolBarCustomViewDelegate {
             if (haveWeightAndHeight) {
                 basicInfoList.addAll(weightAndHeight)
             } else {
+                basicInfoList.clear()
                 return@setOnClickListener
             }
 
-            // TODO:「生活習慣」の結果を取得
+            //「生活習慣」の結果を取得
             val lifestyleHabitQuestion = getAllInputData(binding.lifestyleQuestionContainer)
             val haveAllAnsOnLifestyleHabit = editTextValidation(lifestyleHabitQuestion)
             if (haveAllAnsOnLifestyleHabit) {
                 lifestyleHabitList.addAll(lifestyleHabitQuestion)
             } else {
+                basicInfoList.clear()
                 return@setOnClickListener
             }
-            lifestyleHabitList.forEach { Log.d("LIFESTYLE", it) }
 
             // ============ ラジオボタンを一行一行読み込む ============
             //「からだの症状」の結果を取得
@@ -144,16 +147,14 @@ class InputDataActivity : AppCompatActivity(), ToolBarCustomViewDelegate {
             //「こころの症状」の結果を取得
             val questionAdapterMental = binding.lvQuestion2
             var isSelectedOneAnsOnMental = readEachRadioBtn(questionAdapterMental)
-            // FIXME:ここのエラー処理できていないかも？
             if (!isSelectedOneAnsOnMental) {
                 return@setOnClickListener
             }
 
             // 基本情報とアンケート結果をまとめる
-            allInfoList.addAll(basicInfoList) // 基本情報の結果を追加
-            allInfoList.addAll(radioBtnList)  // 「からだの症状」と「こころの症状」の結果を追加
-            // TODO:「生活習慣」追加
-            allInfoList.addAll(lifestyleHabitList)
+            allInfoList.addAll(basicInfoList)       // 基本情報の結果を追加
+            allInfoList.addAll(radioBtnList)        // 「からだの症状」と「こころの症状」の結果を追加
+            allInfoList.addAll(lifestyleHabitList)  // 「生活習慣」の結果を追加
 
             // 患者の基本情報とアンケート情報の両方のバリデーション結果がtrueの場合ファイル作成
             var isSuccess = false
@@ -408,7 +409,6 @@ class InputDataActivity : AppCompatActivity(), ToolBarCustomViewDelegate {
                 showAlertDialog(question)
                 basicInfoList.clear()
                 radioBtnList.clear()
-                lifestyleHabitList.clear()
 
                 return false
             }
