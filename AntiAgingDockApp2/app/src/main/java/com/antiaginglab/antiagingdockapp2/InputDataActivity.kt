@@ -24,13 +24,17 @@ import java.time.format.DateTimeFormatter
 class InputDataActivity : AppCompatActivity(), ToolBarCustomViewDelegate {
 
     private var fileName = ""
-    private var basicInfoList: MutableList<String> = mutableListOf() // EditTextの結果を格納するためのリスト
-    private var radioBtnList: MutableList<String> = mutableListOf()  // RadioButtonの結果を格納するためのリスト
-    private var allInfoList: MutableList<String> = mutableListOf() // 全てのアンケート結果を格納するためのリスト
+
+    private var basicInfoList: MutableList<String> = mutableListOf()        // 「基本情報」の結果を格納するためのリスト
+    private var radioBtnList: MutableList<String> = mutableListOf()         // 「からだの症状」と「こころの症状」の結果を格納するためのリスト
+    private var lifestyleHabitList: MutableList<String> = mutableListOf()   // 「生活習慣」の結果を格納するためのリスト
+    private var allInfoList: MutableList<String> = mutableListOf()          // 全てのアンケート結果を格納するためのリスト
 
     private lateinit var binding: ActivityInputDataBinding
+
     private lateinit var questionAdapter: QuestionAdapter
     private lateinit var questionAdapter2: QuestionAdapter
+
     private lateinit var questionList: ArrayList<String>
     private lateinit var questionList2: ArrayList<String>
 
@@ -119,17 +123,28 @@ class InputDataActivity : AppCompatActivity(), ToolBarCustomViewDelegate {
                 return@setOnClickListener
             }
 
+            // TODO:「生活習慣」の結果を取得
+            val lifestyleHabitQuestion = getAllInputData(binding.lifestyleQuestionContainer)
+            val haveAllAnsOnLifestyleHabit = editTextValidation(lifestyleHabitQuestion)
+            if (haveAllAnsOnLifestyleHabit) {
+                lifestyleHabitList.addAll(lifestyleHabitQuestion)
+            } else {
+                return@setOnClickListener
+            }
+            lifestyleHabitList.forEach { Log.d("LIFESTYLE", it) }
+
             // ============ ラジオボタンを一行一行読み込む ============
-            // TODO:「からだの症状」の結果を取得
+            //「からだの症状」の結果を取得
             val questionAdapterBody = binding.lvQuestion
             var isSelectedOneAnsOnBody = readEachRadioBtn(questionAdapterBody)
             if (!isSelectedOneAnsOnBody) {
                 return@setOnClickListener
             }
 
-            // TODO:「こころの症状」の結果を取得
+            //「こころの症状」の結果を取得
             val questionAdapterMental = binding.lvQuestion2
             var isSelectedOneAnsOnMental = readEachRadioBtn(questionAdapterMental)
+            // FIXME:ここのエラー処理できていないかも？
             if (!isSelectedOneAnsOnMental) {
                 return@setOnClickListener
             }
@@ -138,10 +153,11 @@ class InputDataActivity : AppCompatActivity(), ToolBarCustomViewDelegate {
             allInfoList.addAll(basicInfoList) // 基本情報の結果を追加
             allInfoList.addAll(radioBtnList)  // 「からだの症状」と「こころの症状」の結果を追加
             // TODO:「生活習慣」追加
+            allInfoList.addAll(lifestyleHabitList)
 
             // 患者の基本情報とアンケート情報の両方のバリデーション結果がtrueの場合ファイル作成
             var isSuccess = false
-            if ( isSelectedOneAnsOnBody && isSelectedOneAnsOnMental && haveIdAndName && haveBirthday && haveWeightAndHeight) {
+            if ( isSelectedOneAnsOnBody && isSelectedOneAnsOnMental && haveIdAndName && haveBirthday && haveWeightAndHeight && haveAllAnsOnLifestyleHabit) {
                 val filePath = "/data/data/com.antiaginglab.antiagingdockapp2/files/${fileName}"
                 val csvFile = File(filePath)
                 if (csvFile.exists()) {
@@ -151,12 +167,14 @@ class InputDataActivity : AppCompatActivity(), ToolBarCustomViewDelegate {
                         // ファイルにデータを記録したら、リスト内のデータをクリアにする
                         basicInfoList.clear()
                         radioBtnList.clear()
+                        lifestyleHabitList.clear()
                         allInfoList.clear()
 
                         // ラジオボタンの結果をクリアにする
                         clearRadioBtn()
                         // editTextに入力された値をクリアする
                         clearForm(binding.containerForBasicInfo)
+                        clearForm(binding.lifestyleQuestionContainer)
                     }
                 } else {
                     // ファイルがない場合
@@ -165,12 +183,14 @@ class InputDataActivity : AppCompatActivity(), ToolBarCustomViewDelegate {
                         // ファイルにデータを記録したら、リスト内のデータをクリアにする
                         basicInfoList.clear()
                         radioBtnList.clear()
+                        lifestyleHabitList.clear()
                         allInfoList.clear()
 
                         // ラジオボタンの結果をクリアにする
                         clearRadioBtn()
                         // editTextに入力された値をクリアする
                         clearForm(binding.containerForBasicInfo)
+                        clearForm(binding.lifestyleQuestionContainer)
                     }
                 }
 
@@ -180,7 +200,7 @@ class InputDataActivity : AppCompatActivity(), ToolBarCustomViewDelegate {
         }
     }
 
-    // ============= ツールバーの設定 =============
+    // ===== ツールバーの設定 =====
     override fun onClickedLeftButton(){ }
     override fun onClickedRightButton() {
         var menu = findViewById<View>(R.id.btn_right)
@@ -200,6 +220,7 @@ class InputDataActivity : AppCompatActivity(), ToolBarCustomViewDelegate {
             false
         }
     }
+
 
     private fun setCustomToolBar() {
         val toolBarCustomView = ToolBarCustomView(this)
@@ -226,7 +247,8 @@ class InputDataActivity : AppCompatActivity(), ToolBarCustomViewDelegate {
         val fw = FileWriter(file, false)
         val pw = PrintWriter(BufferedWriter(fw))
 
-        // ヘッダーの指定
+        // --- ヘッダーの指定 ---
+        // 基本情報
         pw.print("ID")
         pw.print(",")
         pw.print("名前")
@@ -237,6 +259,8 @@ class InputDataActivity : AppCompatActivity(), ToolBarCustomViewDelegate {
         pw.print(",")
         pw.print("身長")
         pw.print(",")
+
+        // からだの症状
         pw.print("目が疲れる")
         pw.print(",")
         pw.print("目がかすむ")
@@ -247,6 +271,8 @@ class InputDataActivity : AppCompatActivity(), ToolBarCustomViewDelegate {
         pw.print(",")
         pw.print("筋肉痛・こり")
         pw.print(",")
+
+        // こころの症状
         pw.print("いらいらする")
         pw.print(",")
         pw.print("怒りっぽい")
@@ -256,6 +282,22 @@ class InputDataActivity : AppCompatActivity(), ToolBarCustomViewDelegate {
         pw.print("幸せと感じない")
         pw.print(",")
         pw.print("生きがいがない")
+        pw.print(",")
+
+        // 生活習慣
+        pw.print("タバコ")
+        pw.print(",")
+        pw.print("酒(/1日)")
+        pw.print(",")
+        pw.print("酒(/週)")
+        pw.print(",")
+        pw.print("運動")
+        pw.print(",")
+        pw.print("睡眠時間")
+        pw.print(",")
+        pw.print("水分摂取")
+        pw.print(",")
+        pw.print("TV画面などの注視時間")
         pw.println()
 
         // データを書き込む
@@ -366,6 +408,7 @@ class InputDataActivity : AppCompatActivity(), ToolBarCustomViewDelegate {
                 showAlertDialog(question)
                 basicInfoList.clear()
                 radioBtnList.clear()
+                lifestyleHabitList.clear()
 
                 return false
             }
