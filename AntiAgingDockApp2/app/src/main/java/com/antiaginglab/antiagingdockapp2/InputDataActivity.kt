@@ -133,6 +133,7 @@ class InputDataActivity : AppCompatActivity(), ToolBarCustomViewDelegate {
                 lifestyleHabitList.addAll(lifestyleHabitQuestion)
             } else {
                 basicInfoList.clear()
+                lifestyleHabitList.clear()
                 return@setOnClickListener
             }
 
@@ -141,6 +142,10 @@ class InputDataActivity : AppCompatActivity(), ToolBarCustomViewDelegate {
             val questionAdapterBody = binding.lvQuestion
             var isSelectedOneAnsOnBody = readEachRadioBtn(questionAdapterBody)
             if (!isSelectedOneAnsOnBody) {
+                basicInfoList.clear()
+                radioBtnList.clear()
+                lifestyleHabitList.clear()
+
                 return@setOnClickListener
             }
 
@@ -148,6 +153,10 @@ class InputDataActivity : AppCompatActivity(), ToolBarCustomViewDelegate {
             val questionAdapterMental = binding.lvQuestion2
             var isSelectedOneAnsOnMental = readEachRadioBtn(questionAdapterMental)
             if (!isSelectedOneAnsOnMental) {
+                basicInfoList.clear()
+                radioBtnList.clear()
+                lifestyleHabitList.clear()
+
                 return@setOnClickListener
             }
 
@@ -407,8 +416,6 @@ class InputDataActivity : AppCompatActivity(), ToolBarCustomViewDelegate {
             // ラジオボタンが一つも選択されていない場合はアラートを表示
             if(!isSelectedOneAns) {
                 showAlertDialog(question)
-                basicInfoList.clear()
-                radioBtnList.clear()
 
                 return false
             }
