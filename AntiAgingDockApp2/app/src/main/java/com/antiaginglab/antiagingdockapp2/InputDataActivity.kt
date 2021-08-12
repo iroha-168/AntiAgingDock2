@@ -98,115 +98,128 @@ class InputDataActivity : AppCompatActivity(), ToolBarCustomViewDelegate {
         // 送信ボタンをクリックした時の処理
         binding.btnSend1.setOnClickListener {
 
-            // ============ 患者の基本情報を取得 ============
-            val idAndName = getAllInputData(binding.idAndNameContainer)
-            val haveIdAndName = editTextValidation(idAndName)
-            if (haveIdAndName){
-                basicInfoList.addAll(idAndName)
-            } else {
-                basicInfoList.clear()
-                return@setOnClickListener
-            }
-
-            val birthday = getAllInputData(binding.birthdayContainer)
-            val haveBirthday = editTextValidation(birthday)
-            if (haveBirthday) {
-                basicInfoList.addAll(birthday)
-            } else {
-                basicInfoList.clear()
-                return@setOnClickListener
-            }
-
-            val weightAndHeight = getAllInputData(binding.weightAndHeightContainer)
-            val haveWeightAndHeight = editTextValidation(weightAndHeight)
-            if (haveWeightAndHeight) {
-                basicInfoList.addAll(weightAndHeight)
-            } else {
-                basicInfoList.clear()
-                return@setOnClickListener
-            }
-
-            //「生活習慣」の結果を取得
-            val lifestyleHabitQuestion = getAllInputData(binding.lifestyleQuestionContainer)
-            val haveAllAnsOnLifestyleHabit = editTextValidation(lifestyleHabitQuestion)
-            if (haveAllAnsOnLifestyleHabit) {
-                lifestyleHabitList.addAll(lifestyleHabitQuestion)
-            } else {
-                basicInfoList.clear()
-                lifestyleHabitList.clear()
-                return@setOnClickListener
-            }
-
-            // ============ ラジオボタンを一行一行読み込む ============
-            //「からだの症状」の結果を取得
-            val questionAdapterBody = binding.lvQuestion
-            var isSelectedOneAnsOnBody = readEachRadioBtn(questionAdapterBody)
-            if (!isSelectedOneAnsOnBody) {
-                basicInfoList.clear()
-                radioBtnList.clear()
-                lifestyleHabitList.clear()
-
-                return@setOnClickListener
-            }
-
-            //「こころの症状」の結果を取得
-            val questionAdapterMental = binding.lvQuestion2
-            var isSelectedOneAnsOnMental = readEachRadioBtn(questionAdapterMental)
-            if (!isSelectedOneAnsOnMental) {
-                basicInfoList.clear()
-                radioBtnList.clear()
-                lifestyleHabitList.clear()
-
-                return@setOnClickListener
-            }
-
-            // 基本情報とアンケート結果をまとめる
-            allInfoList.addAll(basicInfoList)       // 基本情報の結果を追加
-            allInfoList.addAll(radioBtnList)        // 「からだの症状」と「こころの症状」の結果を追加
-            allInfoList.addAll(lifestyleHabitList)  // 「生活習慣」の結果を追加
-
-            // 患者の基本情報とアンケート情報の両方のバリデーション結果がtrueの場合ファイル作成
-            var isSuccess = false
-            if ( isSelectedOneAnsOnBody && isSelectedOneAnsOnMental && haveIdAndName && haveBirthday && haveWeightAndHeight && haveAllAnsOnLifestyleHabit) {
-                val filePath = "/data/data/com.antiaginglab.antiagingdockapp2/files/${fileName}"
-                val csvFile = File(filePath)
-                if (csvFile.exists()) {
-                    // すでにファイルが存在する場合
-                    isSuccess = addToFile(allInfoList)
-                    if (isSuccess) {
-                        // ファイルにデータを記録したら、リスト内のデータをクリアにする
+            // 送信処理を開始して良いかアラートダイアログで確認
+            AlertDialog.Builder(this)
+                .setTitle("この内容で送信しますか？")
+                .setMessage("送信した内容を後から編集できません。")
+                // アラートダイアログで「送信する」が押された場合
+                .setPositiveButton("送信する"){ _, _ ->
+                    // ============ 患者の基本情報を取得 ============
+                    val idAndName = getAllInputData(binding.idAndNameContainer)
+                    val haveIdAndName = editTextValidation(idAndName)
+                    if (haveIdAndName){
+                        basicInfoList.addAll(idAndName)
+                    } else {
                         basicInfoList.clear()
-                        radioBtnList.clear()
-                        lifestyleHabitList.clear()
-                        allInfoList.clear()
-
-                        // ラジオボタンの結果をクリアにする
-                        clearRadioBtn()
-                        // editTextに入力された値をクリアする
-                        clearForm(binding.containerForBasicInfo)
-                        clearForm(binding.lifestyleQuestionContainer)
+                        return@setPositiveButton
                     }
-                } else {
-                    // ファイルがない場合
-                    isSuccess = createFile(allInfoList)
-                    if (isSuccess) {
-                        // ファイルにデータを記録したら、リスト内のデータをクリアにする
+
+                    val birthday = getAllInputData(binding.birthdayContainer)
+                    val haveBirthday = editTextValidation(birthday)
+                    if (haveBirthday) {
+                        basicInfoList.addAll(birthday)
+                    } else {
+                        basicInfoList.clear()
+                        return@setPositiveButton
+                    }
+
+                    val weightAndHeight = getAllInputData(binding.weightAndHeightContainer)
+                    val haveWeightAndHeight = editTextValidation(weightAndHeight)
+                    if (haveWeightAndHeight) {
+                        basicInfoList.addAll(weightAndHeight)
+                    } else {
+                        basicInfoList.clear()
+                        return@setPositiveButton
+                    }
+
+                    //「生活習慣」の結果を取得
+                    val lifestyleHabitQuestion = getAllInputData(binding.lifestyleQuestionContainer)
+                    val haveAllAnsOnLifestyleHabit = editTextValidation(lifestyleHabitQuestion)
+                    if (haveAllAnsOnLifestyleHabit) {
+                        lifestyleHabitList.addAll(lifestyleHabitQuestion)
+                    } else {
+                        basicInfoList.clear()
+                        lifestyleHabitList.clear()
+                        return@setPositiveButton
+                    }
+
+                    // ============ ラジオボタンを一行一行読み込む ============
+                    //「からだの症状」の結果を取得
+                    val questionAdapterBody = binding.lvQuestion
+                    var isSelectedOneAnsOnBody = readEachRadioBtn(questionAdapterBody)
+                    if (!isSelectedOneAnsOnBody) {
                         basicInfoList.clear()
                         radioBtnList.clear()
                         lifestyleHabitList.clear()
-                        allInfoList.clear()
 
-                        // ラジオボタンの結果をクリアにする
-                        clearRadioBtn()
-                        // editTextに入力された値をクリアする
-                        clearForm(binding.containerForBasicInfo)
-                        clearForm(binding.lifestyleQuestionContainer)
+                        return@setPositiveButton
+                    }
+
+                    //「こころの症状」の結果を取得
+                    val questionAdapterMental = binding.lvQuestion2
+                    var isSelectedOneAnsOnMental = readEachRadioBtn(questionAdapterMental)
+                    if (!isSelectedOneAnsOnMental) {
+                        basicInfoList.clear()
+                        radioBtnList.clear()
+                        lifestyleHabitList.clear()
+
+                        return@setPositiveButton
+                    }
+
+                    // 基本情報とアンケート結果をまとめる
+                    allInfoList.addAll(basicInfoList)       // 基本情報の結果を追加
+                    allInfoList.addAll(radioBtnList)        // 「からだの症状」と「こころの症状」の結果を追加
+                    allInfoList.addAll(lifestyleHabitList)  // 「生活習慣」の結果を追加
+
+                    // 患者の基本情報とアンケート情報の両方のバリデーション結果がtrueの場合ファイル作成
+                    var isSuccess = false
+                    if ( isSelectedOneAnsOnBody && isSelectedOneAnsOnMental && haveIdAndName && haveBirthday && haveWeightAndHeight && haveAllAnsOnLifestyleHabit) {
+                        val filePath = "/data/data/com.antiaginglab.antiagingdockapp2/files/${fileName}"
+                        val csvFile = File(filePath)
+                        if (csvFile.exists()) {
+                            // すでにファイルが存在する場合
+                            isSuccess = addToFile(allInfoList)
+                            if (isSuccess) {
+                                // ファイルにデータを記録したら、リスト内のデータをクリアにする
+                                basicInfoList.clear()
+                                radioBtnList.clear()
+                                lifestyleHabitList.clear()
+                                allInfoList.clear()
+
+                                // ラジオボタンの結果をクリアにする
+                                clearRadioBtn()
+                                // editTextに入力された値をクリアする
+                                clearForm(binding.containerForBasicInfo)
+                                clearForm(binding.lifestyleQuestionContainer)
+                            }
+                        } else {
+                            // ファイルがない場合
+                            isSuccess = createFile(allInfoList)
+                            if (isSuccess) {
+                                // ファイルにデータを記録したら、リスト内のデータをクリアにする
+                                basicInfoList.clear()
+                                radioBtnList.clear()
+                                lifestyleHabitList.clear()
+                                allInfoList.clear()
+
+                                // ラジオボタンの結果をクリアにする
+                                clearRadioBtn()
+                                // editTextに入力された値をクリアする
+                                clearForm(binding.containerForBasicInfo)
+                                clearForm(binding.lifestyleQuestionContainer)
+                            }
+                        }
+
+                        // トースト表示
+                        showToast(this, R.drawable.toast_ok)
                     }
                 }
-
-                // トースト表示
-                showToast(this, R.drawable.toast_ok)
-            }
+                // アラートダイアログでキャンセルが押された場合
+                .setNegativeButton("キャンセル") { _, _ ->
+                    return@setNegativeButton
+                }
+                // アラートダイアログ表示
+                .show()
         }
     }
 
