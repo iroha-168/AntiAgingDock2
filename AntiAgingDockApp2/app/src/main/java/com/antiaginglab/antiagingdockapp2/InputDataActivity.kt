@@ -58,31 +58,57 @@ class InputDataActivity : AppCompatActivity(), ToolBarCustomViewDelegate {
                 "目がかすむ",
                 "肩がこる",
                 "眼痛",
-                "筋肉痛・こり"
-//                "動悸",
-//                "息切れ",
-//                "太りやすい",
-//                "るいそう・やせ",
-//                "だるい",
-//                "健康感がない",
-//                "口渇",
-//                "肌の不調",
-//                "食欲不振",
-//                "胃が張る",
-//                "胃痛",
-//                "風邪をひきやすい",
-//                "咳や痰",
-//                "下痢",
-//                "便秘",
-//                "白髪",
-//                "抜け毛"
+                "筋肉痛・こり",
+                "動悸",
+                "息切れ",
+                "ふとりやすい",
+                "るいそう・やせ",
+                "だるい",
+                "健康感がない",
+                "口渇",
+                "肌の不調",
+                "食欲不振",
+                "胃が張る",
+                "胃痛",
+                "風邪をひきやすい",
+                "咳や痰",
+                "下痢",
+                "便秘",
+                "白髪",
+                "抜け毛",
+                "頭痛",
+                "めまい",
+                "耳鳴り",
+                "腰痛",
+                "関節痛",
+                "むくみ",
+                "汗をかきやすい",
+                "頻尿",
+                "のぼせ",
+                "冷え性"
         )
         questionList2 = arrayListOf(
             "イライラする",
             "怒りっぽい",
             "意欲がわかない",
             "幸せと感じない",
-            "生きがいがない"
+            "生きがいがない",
+            "日常生活が楽しくない",
+            "自信を失った",
+            "人と話すのが嫌",
+            "憂うつ",
+            "役に立つ人間でない",
+            "眠りが浅い",
+            "寝付きが悪い",
+            "くよくよする",
+            "ど忘れをする",
+            "集中できない",
+            "問題を解決できない",
+            "容易に判断できない",
+            "心配事でよく眠れない",
+            "緊張感",
+            "理由なく不安になる",
+            "何か恐怖心を感じる"
         )
 
         // 作成したリストをアダプターにセット
@@ -294,6 +320,60 @@ class InputDataActivity : AppCompatActivity(), ToolBarCustomViewDelegate {
         pw.print(",")
         pw.print("筋肉痛・こり")
         pw.print(",")
+        pw.print("動悸")
+        pw.print(",")
+        pw.print("息切れ")
+        pw.print(",")
+        pw.print("ふとりやすい")
+        pw.print(",")
+        pw.print("るいそう・やせ")
+        pw.print(",")
+        pw.print("だるい")
+        pw.print(",")
+        pw.print("健康感がない")
+        pw.print(",")
+        pw.print("口渇")
+        pw.print(",")
+        pw.print("肌の不調")
+        pw.print(",")
+        pw.print("食欲不振")
+        pw.print(",")
+        pw.print("胃が張る")
+        pw.print(",")
+        pw.print("胃痛")
+        pw.print(",")
+        pw.print("風邪をひきやすい")
+        pw.print(",")
+        pw.print("咳や痰")
+        pw.print(",")
+        pw.print("下痢")
+        pw.print(",")
+        pw.print("便秘")
+        pw.print(",")
+        pw.print("白髪")
+        pw.print(",")
+        pw.print("抜け毛")
+        pw.print(",")
+        pw.print("頭痛")
+        pw.print(",")
+        pw.print("めまい")
+        pw.print(",")
+        pw.print("耳鳴り")
+        pw.print(",")
+        pw.print("腰痛")
+        pw.print(",")
+        pw.print("関節痛")
+        pw.print(",")
+        pw.print("むくみ")
+        pw.print(",")
+        pw.print("汗をかきやすい")
+        pw.print(",")
+        pw.print("頻尿")
+        pw.print(",")
+        pw.print("のぼせ")
+        pw.print(",")
+        pw.print("冷え性")
+        pw.print(",")
 
         // こころの症状
         pw.print("いらいらする")
@@ -305,6 +385,38 @@ class InputDataActivity : AppCompatActivity(), ToolBarCustomViewDelegate {
         pw.print("幸せと感じない")
         pw.print(",")
         pw.print("生きがいがない")
+        pw.print(",")
+        pw.print("日常生活が楽しくない")
+        pw.print(",")
+        pw.print("自信を失った")
+        pw.print(",")
+        pw.print("人と話すのが嫌")
+        pw.print(",")
+        pw.print("憂うつ")
+        pw.print(",")
+        pw.print("役に立つ人間でない")
+        pw.print(",")
+        pw.print("眠りが浅い")
+        pw.print(",")
+        pw.print("寝つきが悪い")
+        pw.print(",")
+        pw.print("くよくよする")
+        pw.print(",")
+        pw.print("ど忘れをする")
+        pw.print(",")
+        pw.print("集中できない")
+        pw.print(",")
+        pw.print("問題を解決できない")
+        pw.print(",")
+        pw.print("容易に判断できない")
+        pw.print(",")
+        pw.print("心配事でよく眠れない")
+        pw.print(",")
+        pw.print("緊張感")
+        pw.print(",")
+        pw.print("理由なく不安になる")
+        pw.print(",")
+        pw.print("何か恐怖心を感じる")
         pw.print(",")
 
         // 生活習慣
