@@ -208,12 +208,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical">
-
                     <ListView
                         android:id="@+id/lv_question"
                         android:layout_width="match_parent"
-                        android:layout_height="300dp" />
+                        android:layout_height="1600dp" />
                 </LinearLayout>
+
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -295,7 +295,7 @@
                     <ListView
                         android:id="@+id/lv_question_2"
                         android:layout_width="match_parent"
-                        android:layout_height="300dp" />
+                        android:layout_height="1050dp" />
                 </LinearLayout>
 
                 <TextView
