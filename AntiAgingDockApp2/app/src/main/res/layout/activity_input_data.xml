@@ -450,32 +450,41 @@
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
                         android:layout_weight="3">
+
                         <EditText
                             android:id="@+id/smoking"
+                            android:inputType="number"
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"/>
+                            android:layout_height="match_parent" />
+
                         <EditText
                             android:id="@+id/alcohol_per_day"
+                            android:inputType="number"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"/>
                         <EditText
                             android:id="@+id/alcohol_per_week"
+                            android:inputType="number"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"/>
                         <EditText
                             android:id="@+id/exercise"
+                            android:inputType="number"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"/>
                         <EditText
                             android:id="@+id/sleep_time"
+                            android:inputType="number"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"/>
                         <EditText
                             android:id="@+id/hydration"
+                            android:inputType="number"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"/>
                         <EditText
-                            android:id="@+id/tv_watiching"
+                            android:id="@+id/tv_watching"
+                            android:inputType="number"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"/>
                     </LinearLayout>
