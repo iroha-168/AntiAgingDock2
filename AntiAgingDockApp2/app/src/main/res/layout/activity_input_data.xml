@@ -68,7 +68,7 @@
                     android:id="@+id/edit_txt_birthday"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
-                    android:hint="生年月日(2021/01/01)"
+                    android:hint="生年月日(例：2021/01/01)"
                     android:singleLine="true" />
 
                 <LinearLayout
@@ -101,7 +101,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
             android:layout_marginBottom="32dp"
-            android:text="あなたの症状を教えてください。当てはまる□をタップしてください。"
+            android:text="あなたの症状を教えてください。当てはまる○を押してください。"
             android:textAlignment="center"
             android:textColor="@color/black"
             android:textSize="26dp" />
