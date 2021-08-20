@@ -128,6 +128,8 @@ class InputDataActivity : AppCompatActivity(), ToolBarCustomViewDelegate, DatePi
         // TODO:生年月日を入力するeditTextをクリックしたときの処理
         // TODO:DatePicker(ドラムロール)が表示される→選択→EditTextに表示される
         binding.editTxtBirthday.setOnClickListener {
+            val datePicker = DatePicker(this)
+            datePicker.calendarViewShown = false
             showDatePickerDialog(binding.editTxtBirthday)
         }
 
