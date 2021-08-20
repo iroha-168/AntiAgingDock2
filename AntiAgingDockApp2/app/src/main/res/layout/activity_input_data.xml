@@ -69,7 +69,9 @@
                     android:id="@+id/edit_txt_birthday"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
-                    android:hint="生年月日(例：2021/01/01)"
+                    android:hint="生年月日"
+                    android:focusable="false"
+                    android:inputType="date"
                     android:singleLine="true" />
 
                 <LinearLayout

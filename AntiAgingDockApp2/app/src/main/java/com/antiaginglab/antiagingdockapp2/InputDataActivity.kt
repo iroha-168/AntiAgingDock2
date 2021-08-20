@@ -1,5 +1,6 @@
 package com.antiaginglab.antiagingdockapp2
 
+import android.app.DatePickerDialog
 import android.content.Context
 import android.content.Intent
 import android.os.Build
@@ -13,6 +14,7 @@ import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.core.view.children
+import androidx.fragment.app.FragmentActivity
 import com.antiaginglab.antiagingdockapp2.databinding.ActivityInputDataBinding
 import java.io.BufferedWriter
 import java.io.File
@@ -20,8 +22,10 @@ import java.io.FileWriter
 import java.io.PrintWriter
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
+import java.util.*
+import kotlin.collections.ArrayList
 
-class InputDataActivity : AppCompatActivity(), ToolBarCustomViewDelegate {
+class InputDataActivity : AppCompatActivity(), ToolBarCustomViewDelegate, DatePickerDialog.OnDateSetListener {
 
     private var fileName = ""
 
@@ -120,6 +124,12 @@ class InputDataActivity : AppCompatActivity(), ToolBarCustomViewDelegate {
 
         // ファイル名を生成
         fileName = makeFileName()
+
+        // TODO:生年月日を入力するeditTextをクリックしたときの処理
+        // TODO:DatePicker(ドラムロール)が表示される→選択→EditTextに表示される
+        binding.editTxtBirthday.setOnClickListener {
+            showDatePickerDialog(binding.editTxtBirthday)
+        }
 
         // 送信ボタンをクリックした時の処理
         binding.btnSend1.setOnClickListener {
@@ -249,6 +259,12 @@ class InputDataActivity : AppCompatActivity(), ToolBarCustomViewDelegate {
         }
     }
 
+    // TODO:===== DatePickerDialogで日付が選択された時の処理 =====
+    override fun onDateSet(view: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
+        val birthday = String.format("%d/%02d/%02d", year, month+1, dayOfMonth)
+        binding.editTxtBirthday.setText(birthday)
+    }
+
     // ===== ツールバーの設定 =====
     override fun onClickedLeftButton(){ }
     override fun onClickedRightButton() {
@@ -287,6 +303,12 @@ class InputDataActivity : AppCompatActivity(), ToolBarCustomViewDelegate {
         )
         // カスタムツールバーを表示する
         layout.addView(toolBarCustomView)
+    }
+
+    // ===== DatePickerDialogを表示する =====
+    private fun showDatePickerDialog(v:View) {
+        val newFragment = DatePickerFragment()
+        newFragment.show(supportFragmentManager, "datePicker")
     }
 
     // ===== ファイルが存在しない場合、ファイルを作成して書き込み =====
@@ -605,5 +627,4 @@ class InputDataActivity : AppCompatActivity(), ToolBarCustomViewDelegate {
             .setPositiveButton("OK"){ _, _ ->  }
             .show()
     }
-
 }
