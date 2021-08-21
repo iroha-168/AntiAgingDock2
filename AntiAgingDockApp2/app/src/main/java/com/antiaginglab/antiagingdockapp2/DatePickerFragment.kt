@@ -16,14 +16,17 @@ class DatePickerFragment : DialogFragment(), DatePickerDialog.OnDateSetListener 
         val month = c.get(Calendar.MONTH)
         val day = c.get(Calendar.DAY_OF_MONTH)
 
-        return DatePickerDialog(
+        var dp = DatePickerDialog(
             requireContext(),
-            AlertDialog.THEME_HOLO_LIGHT,
+            android.R.style.Theme_Holo_Dialog,
             this,
             year,
             month,
             day
         )
+
+        dp.datePicker.calendarViewShown = false
+        return dp
     }
 
     override fun onDateSet(view: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
