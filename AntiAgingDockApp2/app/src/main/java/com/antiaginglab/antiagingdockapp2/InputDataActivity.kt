@@ -125,8 +125,7 @@ class InputDataActivity : AppCompatActivity(), ToolBarCustomViewDelegate, DatePi
         // ファイル名を生成
         fileName = makeFileName()
 
-        // TODO:生年月日を入力するeditTextをクリックしたときの処理
-        // TODO:DatePicker(ドラムロール)が表示される→選択→EditTextに表示される
+        // 生年月日を入力するeditTextをクリックしたときの処理
         binding.editTxtBirthday.setOnClickListener {
             val datePicker = DatePicker(this)
             datePicker.calendarViewShown = false
@@ -261,7 +260,7 @@ class InputDataActivity : AppCompatActivity(), ToolBarCustomViewDelegate, DatePi
         }
     }
 
-    // TODO:===== DatePickerDialogで日付が選択された時の処理 =====
+    // ===== DatePickerDialogで日付が選択された時の処理 =====
     override fun onDateSet(view: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
         val birthday = String.format("%d/%02d/%02d", year, month+1, dayOfMonth)
         binding.editTxtBirthday.setText(birthday)
