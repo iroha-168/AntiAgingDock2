@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.TextView
 
-class QuestionAdapter(context: Context, var questionList: ArrayList<String>) : ArrayAdapter<String>(context, 0, questionList) {
+class QuestionAdapter(context: Context, var questionList: Array<String>) : ArrayAdapter<String>(context, 0, questionList) {
 
     private val layoutInflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
 

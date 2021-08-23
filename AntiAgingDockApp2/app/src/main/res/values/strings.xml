@@ -2,4 +2,62 @@
     <string name="app_name">問診票</string>
     <string name="title_input_activity">高加齢問診票</string>
     <string name="title_confirm_activity">確認画面</string>
+    
+    <string-array name="questionList">
+        <item>目が疲れる</item>
+        <item>目がかすむ</item>
+        <item>眼痛</item>
+        <item>筋肉痛・こり</item>
+        <item>動悸</item>
+        <item>息切れ</item>
+        <item>ふとりやすい</item>
+        <item>るいそう・やせ</item>
+        <item>だるい</item>
+        <item>健康感がない</item>
+        <item>口渇</item>
+        <item>肌の不調</item>
+        <item>食欲不振</item>
+        <item>胃が張る</item>
+        <item>胃痛</item>
+        <item>風邪をひきやすい</item>
+        <item>咳や痰</item>
+        <item>下痢</item>
+        <item>便秘</item>
+        <item>白髪</item>
+        <item>抜け毛</item>
+        <item>頭痛</item>
+        <item>めまい</item>
+        <item>耳鳴り</item>
+        <item>腰痛</item>
+        <item>関節痛</item>
+        <item>むくみ</item>
+        <item>汗をかきやすい</item>
+        <item>頻尿</item>
+        <item>のぼせ</item>
+        <item>冷え性</item>
+    </string-array>
+
+    <string-array name="questionList2">
+        <item>イライラする</item>
+        <item>怒りっぽい</item>
+        <item>意欲がわかない</item>
+        <item>幸せと感じない</item>
+        <item>生きがいがない</item>
+        <item>日常生活が楽しくない</item>
+        <item>自信を失った</item>
+        <item>人と話すのが嫌</item>
+        <item>憂うつ</item>
+        <item>役に立つ人間でない</item>
+        <item>眠りが浅い</item>
+        <item>寝付きが悪い</item>
+        <item>くよくよする</item>
+        <item>ど忘れをする</item>
+        <item>集中できない</item>
+        <item>問題を解決できない</item>
+        <item>容易に判断できない</item>
+        <item>心配事でよく眠れない</item>
+        <item>緊張感</item>
+        <item>理由なく不安になる</item>
+        <item>何か恐怖心を感じる</item>
+    </string-array>
 </resources>

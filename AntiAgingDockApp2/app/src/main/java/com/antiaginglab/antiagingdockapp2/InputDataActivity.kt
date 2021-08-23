@@ -39,8 +39,8 @@ class InputDataActivity : AppCompatActivity(), ToolBarCustomViewDelegate, DatePi
     private lateinit var questionAdapter: QuestionAdapter
     private lateinit var questionAdapter2: QuestionAdapter
 
-    private lateinit var questionList: ArrayList<String>
-    private lateinit var questionList2: ArrayList<String>
+    private lateinit var questionList: Array<String>
+    private lateinit var questionList2: Array<String>
 
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -56,64 +56,9 @@ class InputDataActivity : AppCompatActivity(), ToolBarCustomViewDelegate, DatePi
         // カスタムツールバーの設置
         setCustomToolBar()
 
-        // アンケート項目のデータリストを作成
-        questionList = arrayListOf(
-                "目が疲れる",
-                "目がかすむ",
-                "肩がこる",
-                "眼痛",
-                "筋肉痛・こり",
-                "動悸",
-                "息切れ",
-                "ふとりやすい",
-                "るいそう・やせ",
-                "だるい",
-                "健康感がない",
-                "口渇",
-                "肌の不調",
-                "食欲不振",
-                "胃が張る",
-                "胃痛",
-                "風邪をひきやすい",
-                "咳や痰",
-                "下痢",
-                "便秘",
-                "白髪",
-                "抜け毛",
-                "頭痛",
-                "めまい",
-                "耳鳴り",
-                "腰痛",
-                "関節痛",
-                "むくみ",
-                "汗をかきやすい",
-                "頻尿",
-                "のぼせ",
-                "冷え性"
-        )
-        questionList2 = arrayListOf(
-            "イライラする",
-            "怒りっぽい",
-            "意欲がわかない",
-            "幸せと感じない",
-            "生きがいがない",
-            "日常生活が楽しくない",
-            "自信を失った",
-            "人と話すのが嫌",
-            "憂うつ",
-            "役に立つ人間でない",
-            "眠りが浅い",
-            "寝付きが悪い",
-            "くよくよする",
-            "ど忘れをする",
-            "集中できない",
-            "問題を解決できない",
-            "容易に判断できない",
-            "心配事でよく眠れない",
-            "緊張感",
-            "理由なく不安になる",
-            "何か恐怖心を感じる"
-        )
+        // アンケート項目を文字列配列のxmlから取得
+        questionList = resources.getStringArray(R.array.questionList)
+        questionList2 = resources.getStringArray(R.array.questionList2)
 
         // 作成したリストをアダプターにセット
         questionAdapter = QuestionAdapter(this, questionList)
