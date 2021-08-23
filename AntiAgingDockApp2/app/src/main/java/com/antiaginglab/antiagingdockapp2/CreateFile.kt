@@ -1,0 +1,171 @@
+package com.antiaginglab.antiagingdockapp2
+
+import android.content.Context
+import java.io.BufferedWriter
+import java.io.File
+import java.io.FileWriter
+import java.io.PrintWriter
+
+class CreateFile {
+    public fun execute(patientsDataList: MutableList<String>, applicationContext: Context, fileName: String) : Boolean {
+        // 出力ファイルの作成
+        val file = File(applicationContext.filesDir, fileName)
+        val fw = FileWriter(file, false)
+        val pw = PrintWriter(BufferedWriter(fw))
+
+        // --- ヘッダーの指定 ---
+        // 基本情報
+        pw.print("ID")
+        pw.print(",")
+        pw.print("名前")
+        pw.print(",")
+        pw.print("誕生日")
+        pw.print(",")
+        pw.print("体重")
+        pw.print(",")
+        pw.print("身長")
+        pw.print(",")
+
+        // からだの症状
+        pw.print("目が疲れる")
+        pw.print(",")
+        pw.print("目がかすむ")
+        pw.print(",")
+        pw.print("眼痛")
+        pw.print(",")
+        pw.print("肩がこる")
+        pw.print(",")
+        pw.print("筋肉痛・こり")
+        pw.print(",")
+        pw.print("動悸")
+        pw.print(",")
+        pw.print("息切れ")
+        pw.print(",")
+        pw.print("ふとりやすい")
+        pw.print(",")
+        pw.print("るいそう・やせ")
+        pw.print(",")
+        pw.print("だるい")
+        pw.print(",")
+        pw.print("健康感がない")
+        pw.print(",")
+        pw.print("口渇")
+        pw.print(",")
+        pw.print("肌の不調")
+        pw.print(",")
+        pw.print("食欲不振")
+        pw.print(",")
+        pw.print("胃が張る")
+        pw.print(",")
+        pw.print("胃痛")
+        pw.print(",")
+        pw.print("風邪をひきやすい")
+        pw.print(",")
+        pw.print("咳や痰")
+        pw.print(",")
+        pw.print("下痢")
+        pw.print(",")
+        pw.print("便秘")
+        pw.print(",")
+        pw.print("白髪")
+        pw.print(",")
+        pw.print("抜け毛")
+        pw.print(",")
+        pw.print("頭痛")
+        pw.print(",")
+        pw.print("めまい")
+        pw.print(",")
+        pw.print("耳鳴り")
+        pw.print(",")
+        pw.print("腰痛")
+        pw.print(",")
+        pw.print("関節痛")
+        pw.print(",")
+        pw.print("むくみ")
+        pw.print(",")
+        pw.print("汗をかきやすい")
+        pw.print(",")
+        pw.print("頻尿")
+        pw.print(",")
+        pw.print("のぼせ")
+        pw.print(",")
+        pw.print("冷え性")
+        pw.print(",")
+
+        // こころの症状
+        pw.print("いらいらする")
+        pw.print(",")
+        pw.print("怒りっぽい")
+        pw.print(",")
+        pw.print("意欲がわかない")
+        pw.print(",")
+        pw.print("幸せと感じない")
+        pw.print(",")
+        pw.print("生きがいがない")
+        pw.print(",")
+        pw.print("日常生活が楽しくない")
+        pw.print(",")
+        pw.print("自信を失った")
+        pw.print(",")
+        pw.print("人と話すのが嫌")
+        pw.print(",")
+        pw.print("憂うつ")
+        pw.print(",")
+        pw.print("役に立つ人間でない")
+        pw.print(",")
+        pw.print("眠りが浅い")
+        pw.print(",")
+        pw.print("寝つきが悪い")
+        pw.print(",")
+        pw.print("くよくよする")
+        pw.print(",")
+        pw.print("ど忘れをする")
+        pw.print(",")
+        pw.print("集中できない")
+        pw.print(",")
+        pw.print("問題を解決できない")
+        pw.print(",")
+        pw.print("容易に判断できない")
+        pw.print(",")
+        pw.print("心配事でよく眠れない")
+        pw.print(",")
+        pw.print("緊張感")
+        pw.print(",")
+        pw.print("理由なく不安になる")
+        pw.print(",")
+        pw.print("何か恐怖心を感じる")
+        pw.print(",")
+
+        // 生活習慣
+        pw.print("タバコ")
+        pw.print(",")
+        pw.print("酒(/1日)")
+        pw.print(",")
+        pw.print("酒(/週)")
+        pw.print(",")
+        pw.print("運動")
+        pw.print(",")
+        pw.print("睡眠時間")
+        pw.print(",")
+        pw.print("水分摂取")
+        pw.print(",")
+        pw.print("TV画面などの注視時間")
+        pw.println()
+
+        // データを書き込む
+        val listSize = patientsDataList.size
+        for (i in 0 until listSize) {
+            if(i == listSize-1) {
+                pw.print(patientsDataList[listSize - 1])
+                pw.println()
+            } else {
+                pw.print(patientsDataList[i])
+                pw.print(",")
+            }
+        }
+        // ファイルを閉じる
+        pw.close()
+
+        return true
+    }
+}
