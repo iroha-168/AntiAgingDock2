@@ -6,7 +6,6 @@ import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
@@ -14,7 +13,6 @@ import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.core.view.children
-import androidx.fragment.app.FragmentActivity
 import com.antiaginglab.antiagingdockapp2.databinding.ActivityInputDataBinding
 import java.io.BufferedWriter
 import java.io.File
@@ -23,7 +21,6 @@ import java.io.PrintWriter
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.util.*
-import kotlin.collections.ArrayList
 
 class InputDataActivity : AppCompatActivity(), ToolBarCustomViewDelegate, DatePickerDialog.OnDateSetListener {
 
@@ -345,7 +342,7 @@ class InputDataActivity : AppCompatActivity(), ToolBarCustomViewDelegate, DatePi
 
             // ラジオボタンが一つも選択されていない場合はアラートを表示
             if(!isSelectedOneAns) {
-                showAlertDialog(question)
+                showAlertDialogOnRadioBtn(question)
 
                 return false
             }
@@ -370,7 +367,7 @@ class InputDataActivity : AppCompatActivity(), ToolBarCustomViewDelegate, DatePi
 
         for (i in 0 until listSize) {
             if (patientsDataList[i].isEmpty()) {
-                showToast(this, R.drawable.toast_ng_kuma_w_trans)
+                showAlertDialogExceptRadioBtn()
                 return false
             }
         }
@@ -402,11 +399,20 @@ class InputDataActivity : AppCompatActivity(), ToolBarCustomViewDelegate, DatePi
         tst.show()
     }
 
-    // ===== アラートダイアログを表示する =====
-    private fun showAlertDialog(question: Any) {
+    // ===== ラジオボタン部分の項目に関してアラートダイアログを表示する =====
+    private fun showAlertDialogOnRadioBtn(question: Any) {
         AlertDialog.Builder(this)
-            .setTitle("回答を選択してください！")
-            .setMessage("「${question}」の項目で回答を選択していません！")
+            .setTitle("回答を選択してください")
+            .setMessage("「${question}」の項目で回答を選択していません。")
+            .setPositiveButton("OK"){ _, _ ->  }
+            .show()
+    }
+
+    // ===== 基本情報と生活習慣項目に関してアラートダイアログを表示 =====
+    private fun showAlertDialogExceptRadioBtn() {
+        AlertDialog.Builder(this)
+            .setTitle("全ての項目に回答してください")
+            .setMessage("問診票始めのIDや名前などの基本情報に関する項目への回答、もしくは問診票最後の生活習慣に関する項目への回答が不十分です。")
             .setPositiveButton("OK"){ _, _ ->  }
             .show()
     }
